@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiplomaDataModel", "DiplomaDataModel\DiplomaDataModel.csproj", "{097A095E-99C7-47AA-952D-D518045775A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptionsWebsite", "OptionsWebsite\OptionsWebsite.csproj", "{C0C8B9D9-9E76-4F39-95F1-D92EFF67A4A0}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{097A095E-99C7-47AA-952D-D518045775A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{097A095E-99C7-47AA-952D-D518045775A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{097A095E-99C7-47AA-952D-D518045775A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{097A095E-99C7-47AA-952D-D518045775A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C8B9D9-9E76-4F39-95F1-D92EFF67A4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C8B9D9-9E76-4F39-95F1-D92EFF67A4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C8B9D9-9E76-4F39-95F1-D92EFF67A4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C8B9D9-9E76-4F39-95F1-D92EFF67A4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
