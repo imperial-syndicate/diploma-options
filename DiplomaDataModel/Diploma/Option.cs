@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DiplomaDataModel
 {
-    class Option
+    public class Option
     {
         // Primary Key
         [Key]
