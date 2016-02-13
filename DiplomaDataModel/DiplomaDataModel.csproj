@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Diploma\Choice.cs" />
     <Compile Include="Diploma\Option.cs" />
+    <Compile Include="Diploma\DiplomasContext.cs" />
     <Compile Include="Diploma\YearTerm.cs" />
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
