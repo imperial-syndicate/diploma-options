@@ -168,11 +168,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChoicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OptionsController.cs" />
+    <Compile Include="Controllers\YearTermsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.cs" />
+    <Compile Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.Designer.cs">
+      <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DiplomaMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -185,6 +193,7 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Docs\Readme.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -237,6 +246,21 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\YearTerms\Create.cshtml" />
+    <Content Include="Views\YearTerms\Delete.cshtml" />
+    <Content Include="Views\YearTerms\Details.cshtml" />
+    <Content Include="Views\YearTerms\Edit.cshtml" />
+    <Content Include="Views\YearTerms\Index.cshtml" />
+    <Content Include="Views\Options\Create.cshtml" />
+    <Content Include="Views\Options\Delete.cshtml" />
+    <Content Include="Views\Options\Details.cshtml" />
+    <Content Include="Views\Options\Edit.cshtml" />
+    <Content Include="Views\Options\Index.cshtml" />
+    <Content Include="Views\Choices\Create.cshtml" />
+    <Content Include="Views\Choices\Delete.cshtml" />
+    <Content Include="Views\Choices\Details.cshtml" />
+    <Content Include="Views\Choices\Edit.cshtml" />
+    <Content Include="Views\Choices\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DiplomaDataModel\DiplomaDataModel.csproj">
@@ -251,6 +275,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.resx">
+      <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

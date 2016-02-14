@@ -1,0 +1,90 @@
+﻿@model DiplomaDataModel.Choice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Choice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOption.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstOption.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FourthOption.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FourthOption.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondOption.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondOption.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThirdOption.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThirdOption.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearTerm.YearTermID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearTerm.YearTermID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentLastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectionDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ChoiceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
