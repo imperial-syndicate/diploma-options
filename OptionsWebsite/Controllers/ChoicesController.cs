@@ -11,6 +11,7 @@ using DiplomaDataModel.Diploma;
 
 namespace OptionsWebsite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ChoicesController : Controller
     {
         private DiplomasContext db = new DiplomasContext();
@@ -38,6 +39,8 @@ namespace OptionsWebsite.Controllers
         }
 
         // GET: Choices/Create
+        [OverrideAuthorization()]
+        [Authorize(Roles = "Student,Admin")]
         public ActionResult Create()
         {
             ViewBag.FirstChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
@@ -51,6 +54,8 @@ namespace OptionsWebsite.Controllers
         // POST: Choices/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [OverrideAuthorization()]
+        [Authorize(Roles = "Student,Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId,SelectionDate")] Choice choice)
