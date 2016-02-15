@@ -11,6 +11,7 @@ using DiplomaDataModel.Diploma;
 
 namespace OptionsWebsite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OptionsController : Controller
     {
         private DiplomasContext db = new DiplomasContext();
