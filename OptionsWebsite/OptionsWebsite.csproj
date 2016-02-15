@@ -181,6 +181,11 @@
       <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DiplomaMigrations\Configuration.cs" />
+    <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.cs" />
+    <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.Designer.cs">
+      <DependentUpon>201602142256251_Initial Create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\IdentityMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -193,13 +198,13 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Docs\Readme.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Docs\Readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -280,7 +285,11 @@
     <EmbeddedResource Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.resx">
       <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\IdentityMigrations\201602142256251_Initial Create.resx">
+      <DependentUpon>201602142256251_Initial Create.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
