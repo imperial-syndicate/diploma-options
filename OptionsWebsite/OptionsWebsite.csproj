@@ -180,6 +180,10 @@
     <Compile Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.Designer.cs">
       <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DiplomaMigrations\201602160533073_UpdateRequiredModel.cs" />
+    <Compile Include="Migrations\DiplomaMigrations\201602160533073_UpdateRequiredModel.Designer.cs">
+      <DependentUpon>201602160533073_UpdateRequiredModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DiplomaMigrations\Configuration.cs" />
     <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.cs" />
     <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.Designer.cs">
@@ -285,6 +289,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\DiplomaMigrations\201602140133484_InitialCreate.resx">
       <DependentUpon>201602140133484_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\DiplomaMigrations\201602160533073_UpdateRequiredModel.resx">
+      <DependentUpon>201602160533073_UpdateRequiredModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\IdentityMigrations\201602142256251_Initial Create.resx">
       <DependentUpon>201602142256251_Initial Create.cs</DependentUpon>
