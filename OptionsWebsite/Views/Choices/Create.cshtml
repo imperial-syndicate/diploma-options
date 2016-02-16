@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.YearTermID, "YearTermID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(model => model.YearTermID)
+                @Html.EditorFor(model => model.YearTermID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })
             </div>
         </div>
