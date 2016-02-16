@@ -48,6 +48,30 @@ namespace OptionsWebsite.Controllers
             ViewBag.SecondChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
             ViewBag.ThirdChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
             ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID");
+
+            // Figure out what the name of the currently selected YearTerm is
+            var currentYearTerm = db.YearTerms.Where(c => c.isDefault == true).First();
+            var yearTermID = currentYearTerm.YearTermID;
+            var yearTermNum = currentYearTerm.Term;
+            var yearTermYear = currentYearTerm.Year;
+            var yearTermName = "";
+
+            switch(yearTermNum)
+            {
+                case 10:
+                    yearTermName = "Winter " + yearTermYear;
+                    break;
+                case 20:
+                    yearTermName = "Spring / Summer " + yearTermYear;
+                    break;
+                case 30:
+                    yearTermName = "Fall " + yearTermYear;
+                    break;
+            }
+
+            ViewBag.yearTermID = yearTermID;
+            ViewBag.yearTermName = yearTermName;
+
             return View();
         }
 

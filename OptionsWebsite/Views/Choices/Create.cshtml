@@ -12,16 +12,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Choice</h4>
+        <h4>@ViewBag.yearTermName</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.YearTermID, "YearTermID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.YearTermID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+        @* Hidden field to store the YearTermID that SHOULD NOT be set by the user *@
+        @Html.Hidden("YearTermID", (int)ViewBag.yearTermID)
+        @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.StudentID, htmlAttributes: new { @class = "control-label col-md-2" })
