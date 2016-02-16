@@ -24,14 +24,17 @@ namespace DiplomaDataModel
         // Student A00... Number
         // Max Length 9 Characters
         [StringLength(9)]
+        [Required]
         public string StudentID { get; set; }
 
         // Max Length 40 Characters
         [StringLength(40)]
+        [Required]
         public string StudentFirstName { get; set; }
 
         // Max Length 40 Characters
         [StringLength(40)]
+        [Required]
         public string StudentLastName { get; set; }
 
         // Foreign Key for FirstOption
