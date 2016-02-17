@@ -11,6 +11,7 @@ namespace DiplomaDataModel
     {
         // Primary Key
         [Key]
+        [Display(Name = "Term")]
         public int YearTermID { get; set; }
 
         public int Year { get; set; }
