@@ -43,11 +43,13 @@ namespace OptionsWebsite.Controllers
         [Authorize(Roles = "Student,Admin")]
         public ActionResult Create()
         {
-            ViewBag.FirstChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
-            ViewBag.FourthChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
-            ViewBag.SecondChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
-            ViewBag.ThirdChoiceOptionId = new SelectList(db.Options, "OptionID", "Title");
-            ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID");
+            // Retrieve only the active choices
+            var activeOptions = db.Options.Where(c => c.isActive == true);
+
+            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
+            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
+            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
+            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
 
             // Figure out what the name of the currently selected YearTerm is
             var currentYearTerm = db.YearTerms.Where(c => c.isDefault == true).First();

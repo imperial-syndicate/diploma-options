@@ -23,16 +23,20 @@ namespace DiplomaDataModel
 
         // Student A00... Number
         // Max Length 9 Characters
+        [Display(Name = "Student ID: ")]
         [StringLength(9)]
         [Required]
+        [Editable(false)]
         public string StudentID { get; set; }
 
         // Max Length 40 Characters
+        [Display(Name = "First Name: ")]
         [StringLength(40)]
         [Required]
         public string StudentFirstName { get; set; }
 
         // Max Length 40 Characters
+        [Display(Name = "Last Name: ")]
         [StringLength(40)]
         [Required]
         public string StudentLastName { get; set; }
