@@ -44,7 +44,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.YearTerm.YearTermID)
+            @switch (item.YearTerm.Term)
+            {
+                case 10:
+                    @("Winter");
+                        break;
+                case 20:
+                    @("Spring / Summer");
+                        break;
+                case 30:
+                    @("Fall");
+                    break;
+            }
+            @(item.YearTerm.Year)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StudentID)
