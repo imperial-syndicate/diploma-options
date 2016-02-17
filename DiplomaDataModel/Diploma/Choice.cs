@@ -23,26 +23,26 @@ namespace DiplomaDataModel
 
         // Student A00... Number
         // Max Length 9 Characters
-        [Display(Name = "Student ID: ")]
+        [Display(Name = "Student ID")]
         [StringLength(9)]
         [Required]
         [Editable(false)]
         public string StudentID { get; set; }
 
         // Max Length 40 Characters
-        [Display(Name = "First Name: ")]
+        [Display(Name = "First Name")]
         [StringLength(40)]
         [Required]
         public string StudentFirstName { get; set; }
 
         // Max Length 40 Characters
-        [Display(Name = "Last Name: ")]
+        [Display(Name = "Last Name")]
         [StringLength(40)]
         [Required]
         public string StudentLastName { get; set; }
 
         // Foreign Key for FirstOption
-        [Display(Name = "First Choice: ")]
+        [Display(Name = "First Choice")]
         [ForeignKey("FirstOption")]
         public int? FirstChoiceOptionId { get; set; }
 
@@ -51,7 +51,7 @@ namespace DiplomaDataModel
 
 
         // Foreign Key for SecondOption
-        [Display(Name = "Second Choice: ")]
+        [Display(Name = "Second Choice")]
         [ForeignKey("SecondOption")]
         public int? SecondChoiceOptionId { get; set; }
 
@@ -60,7 +60,7 @@ namespace DiplomaDataModel
 
 
         // Foreign Key for ThirdOption
-        [Display(Name = "Third Choice: ")]
+        [Display(Name = "Third Choice")]
         [ForeignKey("ThirdOption")]
         public int? ThirdChoiceOptionId { get; set; }
 
@@ -69,7 +69,7 @@ namespace DiplomaDataModel
 
 
         // Foreign Key for FourthOption
-        [Display(Name = "Fourth Choice: ")]
+        [Display(Name = "Fourth Choice")]
         [ForeignKey("FourthOption")]
         public int? FourthChoiceOptionId { get; set; }
 
