@@ -68,10 +68,25 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId")] Choice choice)
         {
+            bool isValid = true;
+
+            // Check for non-duplicate options
+            var list = new List<int>();
+            list.Add((int)choice.FirstChoiceOptionId);
+            list.Add((int)choice.SecondChoiceOptionId);
+            list.Add((int)choice.ThirdChoiceOptionId);
+            list.Add((int)choice.FourthChoiceOptionId);
+
+            if (list.Count != list.Distinct().Count())
+            {
+                ModelState.AddModelError("", "The options you chose must be all different");
+                isValid = false;
+            }
+
             // Set the date of selection on the server side
             choice.SelectionDate = DateTime.Now;
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && isValid)
             {
                 db.Choices.Add(choice);
                 db.SaveChanges();
@@ -106,10 +121,15 @@ namespace OptionsWebsite.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.FirstChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FirstChoiceOptionId);
-            ViewBag.FourthChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FourthChoiceOptionId);
-            ViewBag.SecondChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.SecondChoiceOptionId);
-            ViewBag.ThirdChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.ThirdChoiceOptionId);
+
+            // Retrieve only the active choices
+            var activeOptions = getOptions();
+
+            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FirstChoiceOptionId);
+            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FourthChoiceOptionId);
+            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
+            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
+
             ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID", choice.YearTermID);
             return View(choice);
         }
@@ -127,10 +147,15 @@ namespace OptionsWebsite.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FirstChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FirstChoiceOptionId);
-            ViewBag.FourthChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FourthChoiceOptionId);
-            ViewBag.SecondChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.SecondChoiceOptionId);
-            ViewBag.ThirdChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.ThirdChoiceOptionId);
+
+            // Retrieve only the active choices
+            var activeOptions = getOptions();
+
+            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FirstChoiceOptionId);
+            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FourthChoiceOptionId);
+            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
+            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
+
             ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID", choice.YearTermID);
             return View(choice);
         }
