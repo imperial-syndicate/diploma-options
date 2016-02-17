@@ -44,7 +44,7 @@ namespace OptionsWebsite.Controllers
         public ActionResult Create()
         {
             // Retrieve only the active choices
-            var activeOptions = db.Options.Where(c => c.isActive == true);
+            var activeOptions = getOptions();
 
             ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
             ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
@@ -52,27 +52,9 @@ namespace OptionsWebsite.Controllers
             ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title");
 
             // Figure out what the name of the currently selected YearTerm is
-            var currentYearTerm = db.YearTerms.Where(c => c.isDefault == true).First();
-            var yearTermID = currentYearTerm.YearTermID;
-            var yearTermNum = currentYearTerm.Term;
-            var yearTermYear = currentYearTerm.Year;
-            var yearTermName = "";
-
-            switch(yearTermNum)
-            {
-                case 10:
-                    yearTermName = "Winter " + yearTermYear;
-                    break;
-                case 20:
-                    yearTermName = "Spring / Summer " + yearTermYear;
-                    break;
-                case 30:
-                    yearTermName = "Fall " + yearTermYear;
-                    break;
-            }
-
-            ViewBag.yearTermID = yearTermID;
-            ViewBag.yearTermName = yearTermName;
+            Dictionary<String, Object> yearTermValues = getYearTermInfo();
+            ViewBag.yearTermID = yearTermValues["yearTermID"];
+            ViewBag.yearTermName = yearTermValues["yearTermName"];
 
             return View();
         }
@@ -86,7 +68,9 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId")] Choice choice)
         {
+            // Set the date of selection on the server side
             choice.SelectionDate = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Choices.Add(choice);
@@ -94,11 +78,19 @@ namespace OptionsWebsite.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FirstChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FirstChoiceOptionId);
-            ViewBag.FourthChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.FourthChoiceOptionId);
-            ViewBag.SecondChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.SecondChoiceOptionId);
-            ViewBag.ThirdChoiceOptionId = new SelectList(db.Options, "OptionID", "Title", choice.ThirdChoiceOptionId);
-            ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID", choice.YearTermID);
+            // Retrieve only the active choices
+            var activeOptions = getOptions();
+
+            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FirstChoiceOptionId);
+            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FourthChoiceOptionId);
+            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
+            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
+
+            // Figure out what the name of the currently selected YearTerm is
+            Dictionary<String, Object> yearTermValues = getYearTermInfo();
+            ViewBag.yearTermID = yearTermValues["yearTermID"];
+            ViewBag.yearTermName = yearTermValues["yearTermName"];
+
             return View(choice);
         }
 
@@ -176,6 +168,41 @@ namespace OptionsWebsite.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // Returns a DB object of the diploma options that are Active
+        private IQueryable<Option> getOptions()
+        {
+            return db.Options.Where(c => c.isActive == true);
+        }
+
+        private Dictionary<String, Object> getYearTermInfo()
+        {
+            // Figure out what the name of the currently selected YearTerm is
+            var currentYearTerm = db.YearTerms.Where(c => c.isDefault == true).First();
+            var yearTermID = currentYearTerm.YearTermID;
+            var yearTermNum = currentYearTerm.Term;
+            var yearTermYear = currentYearTerm.Year;
+            var yearTermName = "";
+
+            switch (yearTermNum)
+            {
+                case 10:
+                    yearTermName = "Winter " + yearTermYear;
+                    break;
+                case 20:
+                    yearTermName = "Spring / Summer " + yearTermYear;
+                    break;
+                case 30:
+                    yearTermName = "Fall " + yearTermYear;
+                    break;
+            }
+
+            Dictionary<String, Object> dict = new Dictionary<string, object>();
+            dict.Add("yearTermID", yearTermID);
+            dict.Add("yearTermName", yearTermName);
+
+            return dict;
         }
     }
 }
