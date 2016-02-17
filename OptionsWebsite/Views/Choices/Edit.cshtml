@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.YearTermID, "YearTermID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("YearTermID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("YearTermID", (SelectList)ViewBag.YearTermID, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StudentID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StudentID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.Hidden("StudentID", User.Identity.Name)
+                @Html.Label("StudentID", User.Identity.Name, new { @class = "form-control-static" })
                 @Html.ValidationMessageFor(model => model.StudentID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,13 +82,9 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SelectionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SelectionDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SelectionDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @* Hidden field to store the SelectionDate that SHOULD NOT be set by the user *@
+        @Html.HiddenFor(model => model.SelectionDate)
+        @Html.ValidationMessageFor(model => model.SelectionDate, "", new { @class = "text-danger" })
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

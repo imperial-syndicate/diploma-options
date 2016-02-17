@@ -31,7 +31,8 @@ namespace OptionsWebsite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Choice choice = db.Choices.Find(id);
+            var choices = db.Choices.Include(c => c.FirstOption).Include(c => c.FourthOption).Include(c => c.SecondOption).Include(c => c.ThirdOption).Include(c => c.YearTerm);
+            Choice choice = choices.Where(c => c.ChoiceID == id).First();
             if (choice == null)
             {
                 return HttpNotFound();
@@ -69,23 +70,16 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId")] Choice choice)
         {
+            // Set the date of selection on the server side
+            choice.SelectionDate = DateTime.Now;
+
+            // Check to see if the user has made unique choices
             bool isValid = true;
-
-            // Check for non-duplicate options
-            var list = new List<int>();
-            list.Add((int)choice.FirstChoiceOptionId);
-            list.Add((int)choice.SecondChoiceOptionId);
-            list.Add((int)choice.ThirdChoiceOptionId);
-            list.Add((int)choice.FourthChoiceOptionId);
-
-            if (list.Count != list.Distinct().Count())
+            if (!validChoices(choice))
             {
                 ModelState.AddModelError("", "The options you chose must be all different");
                 isValid = false;
             }
-
-            // Set the date of selection on the server side
-            choice.SelectionDate = DateTime.Now;
 
             if (ModelState.IsValid && isValid)
             {
@@ -131,7 +125,16 @@ namespace OptionsWebsite.Controllers
             ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
             ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
 
-            ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID", choice.YearTermID);
+            // Display a custom dropdown with readable YearTerm Values
+            IEnumerable<SelectListItem> termItems = db.YearTerms.Select(c => new SelectListItem()
+            {
+                Value = c.YearTermID.ToString(),
+                Text = (c.Term == 10 ? "Winter " + c.Year :
+                         c.Term == 20 ? "Spring/Summer " + c.Year :
+                         c.Term == 30 ? "Fall " + c.Year : "Error"),
+            });
+            ViewBag.YearTermID = new SelectList(termItems, "Value", "Text", choice.YearTermID.ToString());
+
             return View(choice);
         }
 
@@ -142,7 +145,15 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId,SelectionDate")] Choice choice)
         {
-            if (ModelState.IsValid)
+            // Check to see if the user has made unique choices
+            bool isValid = true;
+            if (!validChoices(choice))
+            {
+                ModelState.AddModelError("", "The options you chose must be all different");
+                isValid = false;
+            }
+
+            if (ModelState.IsValid && isValid)
             {
                 db.Entry(choice).State = EntityState.Modified;
                 db.SaveChanges();
@@ -157,7 +168,15 @@ namespace OptionsWebsite.Controllers
             ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
             ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
 
-            ViewBag.YearTermID = new SelectList(db.YearTerms, "YearTermID", "YearTermID", choice.YearTermID);
+            // Display a custom dropdown with readable YearTerm Values
+            IEnumerable<SelectListItem> termItems = db.YearTerms.Select(c => new SelectListItem()
+            {
+                Value = c.YearTermID.ToString(),
+                Text = (c.Term == 10 ? "Winter " + c.Year :
+                         c.Term == 20 ? "Spring/Summer " + c.Year :
+                         c.Term == 30 ? "Fall " + c.Year : "Error"),
+            });
+            ViewBag.YearTermID = new SelectList(termItems, "Value", "Text", choice.YearTermID.ToString());
             return View(choice);
         }
 
@@ -196,10 +215,52 @@ namespace OptionsWebsite.Controllers
             base.Dispose(disposing);
         }
 
+        // Check to make sure that the user has entered unique choices
+        private bool validChoices(Choice choice)
+        {
+            // Check for non-duplicate options
+            var list = new List<int>();
+            list.Add((int)choice.FirstChoiceOptionId);
+            list.Add((int)choice.SecondChoiceOptionId);
+            list.Add((int)choice.ThirdChoiceOptionId);
+            list.Add((int)choice.FourthChoiceOptionId);
+
+            if (list.Count != list.Distinct().Count())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         // Returns a DB object of the diploma options that are Active
         private IQueryable<Option> getOptions()
         {
             return db.Options.Where(c => c.isActive == true);
+        }
+
+        // Returns a readable string of the passed in YearTerm
+        // eg. Passing in 30, 2015, returns "Fall 2015"
+        private String getReadableYearTerm(int termNum, int termYear)
+        {
+            String value = "";
+
+            switch (termNum)
+            {
+                case 10:
+                    value = "Winter " + termYear;
+                    break;
+                case 20:
+                    value = "Spring/Summer " + termYear;
+                    break;
+                case 30:
+                    value = "Fall " + termYear;
+                    break;
+            }
+
+            return value;
         }
 
         private Dictionary<String, Object> getYearTermInfo()
@@ -211,18 +272,7 @@ namespace OptionsWebsite.Controllers
             var yearTermYear = currentYearTerm.Year;
             var yearTermName = "";
 
-            switch (yearTermNum)
-            {
-                case 10:
-                    yearTermName = "Winter " + yearTermYear;
-                    break;
-                case 20:
-                    yearTermName = "Spring / Summer " + yearTermYear;
-                    break;
-                case 30:
-                    yearTermName = "Fall " + yearTermYear;
-                    break;
-            }
+            yearTermName = getReadableYearTerm(yearTermNum, yearTermYear);
 
             Dictionary<String, Object> dict = new Dictionary<string, object>();
             dict.Add("yearTermID", yearTermID);
@@ -230,5 +280,6 @@ namespace OptionsWebsite.Controllers
 
             return dict;
         }
+ 
     }
 }
