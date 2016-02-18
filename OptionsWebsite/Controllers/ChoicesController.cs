@@ -183,11 +183,13 @@ namespace OptionsWebsite.Controllers
         // GET: Choices/Delete/5
         public ActionResult Delete(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Choice choice = db.Choices.Find(id);
+            var choices = db.Choices.Include(c => c.FirstOption).Include(c => c.FourthOption).Include(c => c.SecondOption).Include(c => c.ThirdOption).Include(c => c.YearTerm);
+            Choice choice = choices.Where(c => c.ChoiceID == id).First();
             if (choice == null)
             {
                 return HttpNotFound();
