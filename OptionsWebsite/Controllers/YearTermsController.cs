@@ -84,6 +84,16 @@ namespace OptionsWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                // The user wants this term to be default, so make sure the others are set to false
+                if (yearTerm.isDefault)
+                {
+                    var terms = db.YearTerms.Where(yT => yT.isDefault == true);
+                    foreach (var term in terms)
+                    {
+                        term.isDefault = false;
+                    }
+                }
+
                 db.Entry(yearTerm).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
