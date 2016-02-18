@@ -23,7 +23,18 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Term)
+            @switch (Model.Term)
+            {
+                case 10:
+                    @("Winter");
+                    break;
+                case 20:
+                    @("Spring/Summer");
+                    break;
+                case 30:
+                    @("Fall");
+                    break;
+            }
         </dd>
 
         <dt>

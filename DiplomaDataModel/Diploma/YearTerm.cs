@@ -21,6 +21,7 @@ namespace DiplomaDataModel
         // Fall             = 30
         public int Term { get; set; }
 
+        [Display(Name = "Default")]
         public bool isDefault { get; set; }
     }
 }
