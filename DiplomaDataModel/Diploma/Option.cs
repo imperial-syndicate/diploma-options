@@ -18,6 +18,7 @@ namespace DiplomaDataModel
         [StringLength(50)]
         public string Title { get; set; }
 
+        [Display(Name = "Currently Active")]
         public bool isActive { get; set; }
     }
 }

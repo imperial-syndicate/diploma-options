@@ -78,6 +78,7 @@ namespace DiplomaDataModel
 
 
         // Always the current Date-Time
+        [Display(Name = "Selection Date")]
         public DateTime SelectionDate { get; set; }
     }
 }

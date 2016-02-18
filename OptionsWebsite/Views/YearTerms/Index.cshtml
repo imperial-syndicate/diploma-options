@@ -29,7 +29,18 @@
             @Html.DisplayFor(modelItem => item.Year)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Term)
+            @switch (item.Term)
+            {
+                case 10:
+                    @("Winter");
+                    break;
+                case 20:
+                    @("Spring/Summer");
+                    break;
+                case 30:
+                    @("Fall");
+                    break;
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.isDefault)
