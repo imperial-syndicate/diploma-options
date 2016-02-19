@@ -112,9 +112,19 @@ namespace OptionsWebsite.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Option option = db.Options.Find(id);
-            db.Options.Remove(option);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            // Check if the option is already in use
+            if (db.Choices.Where(c => c.FirstChoiceOptionId == id
+                                   || c.SecondChoiceOptionId == id
+                                   || c.ThirdChoiceOptionId == id
+                                   || c.FourthChoiceOptionId == id).Count() == 0)
+            {
+                db.Options.Remove(option);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", "Cannot Delete: The option you're trying to delete is still in use");
+            return View(option);
         }
 
         protected override void Dispose(bool disposing)
