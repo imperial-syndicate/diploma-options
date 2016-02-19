@@ -61,6 +61,17 @@ namespace OptionsWebsite.Controllers
                         term.isDefault = false;
                     }
                 }
+                else
+                {
+                    var defaultCount = db.YearTerms.Where(
+                        yT => yT.isDefault == true
+                     && yT.YearTermID != yearTerm.YearTermID).Count();
+                    if (defaultCount <= 0)
+                    {
+                        yearTerm.isDefault = true;
+                    }
+                }
+
                 db.YearTerms.Add(yearTerm);
                 db.SaveChanges();
                 return RedirectToAction("Index");
