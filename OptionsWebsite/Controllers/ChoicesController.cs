@@ -66,13 +66,18 @@ namespace OptionsWebsite.Controllers
             ViewBag.yearTermID = yearTermValues["yearTermID"];
             int yt = (int)yearTermValues["yearTermID"];
             ViewBag.yearTermName = yearTermValues["yearTermName"];
-            var student = db.Choices.Where(c => c.StudentID == User.Identity.Name && c.YearTermID == yt).Count();
 
-            if (student > 0) {
-                ViewBag.ErrorDetails = "You have already submitted a choice for this term.";
-                ViewBag.ReturnUrl = "Index";
-                return View("Error");
-            }  
+            if (User.IsInRole("Student"))
+            {
+                var student = db.Choices.Where(c => c.StudentID == User.Identity.Name && c.YearTermID == yt).Count();
+
+                if (student > 0)
+                {
+                    ViewBag.ErrorDetails = "You have already submitted a choice for this term.";
+                    ViewBag.ReturnUrl = "Index";
+                    return View("Error");
+                }
+            } 
        
             return View();
         }
@@ -97,18 +102,6 @@ namespace OptionsWebsite.Controllers
                 isValid = false;
             }
 
-            if (ModelState.IsValid && isValid)
-            {
-                db.Choices.Add(choice);
-                db.SaveChanges();
-
-                if(User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index");
-                }
-                return View("Thanks");
-            }
-
             // Retrieve only the active choices
             var activeOptions = getOptions();
 
@@ -120,7 +113,32 @@ namespace OptionsWebsite.Controllers
             // Figure out what the name of the currently selected YearTerm is
             Dictionary<String, Object> yearTermValues = getYearTermInfo();
             ViewBag.yearTermID = yearTermValues["yearTermID"];
+            int yt = (int)yearTermValues["yearTermID"];
             ViewBag.yearTermName = yearTermValues["yearTermName"];
+
+            if (User.IsInRole("Admin"))
+            {
+                var student = db.Choices.Where(c => c.StudentID == choice.StudentID && c.YearTermID == yt).Count();
+
+                if (student > 0)
+                {
+                    ViewBag.ErrorDetails = "A Student has already been submitted for this term";
+                    ViewBag.ReturnUrl = "Index";
+                    return View("Error");
+                }
+            }
+
+            if (ModelState.IsValid && isValid)
+            {
+                db.Choices.Add(choice);
+                db.SaveChanges();
+
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Thanks");
+            }
 
             return View(choice);
         }
