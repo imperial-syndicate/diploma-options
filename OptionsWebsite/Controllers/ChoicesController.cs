@@ -64,8 +64,16 @@ namespace OptionsWebsite.Controllers
             // Figure out what the name of the currently selected YearTerm is
             Dictionary<String, Object> yearTermValues = getYearTermInfo();
             ViewBag.yearTermID = yearTermValues["yearTermID"];
+            int yt = (int)yearTermValues["yearTermID"];
             ViewBag.yearTermName = yearTermValues["yearTermName"];
+            var student = db.Choices.Where(c => c.StudentID == User.Identity.Name && c.YearTermID == yt).Count();
 
+            if (student > 0) {
+                ViewBag.ErrorDetails = "You have already submitted a choice for this term.";
+                ViewBag.ReturnUrl = "Index";
+                return View("Error");
+            }  
+       
             return View();
         }
 
