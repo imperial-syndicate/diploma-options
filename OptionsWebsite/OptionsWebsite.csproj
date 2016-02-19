@@ -273,6 +273,7 @@
     <Content Include="Views\Choices\Index.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Choices\Error.cshtml" />
+    <Content Include="Views\Choices\Thanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DiplomaDataModel\DiplomaDataModel.csproj">

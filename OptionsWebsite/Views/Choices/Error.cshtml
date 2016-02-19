@@ -8,5 +8,7 @@
 
 @(ViewBag.ErrorDetails)
 <br/>
-@Html.ActionLink("Back to List", (string)ViewBag.ReturnUrl)
+@if(User.IsInRole("Admin")) {
+    @Html.ActionLink("Back to List", (string)ViewBag.ReturnUrl)
+}
 

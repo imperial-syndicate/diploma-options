@@ -101,7 +101,12 @@ namespace OptionsWebsite.Controllers
             {
                 db.Choices.Add(choice);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if(User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Thanks");
             }
 
             // Retrieve only the active choices
