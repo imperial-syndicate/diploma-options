@@ -120,20 +120,15 @@ namespace OptionsWebsite.Controllers
             // Retrieve only the active choices
             var activeOptions = getOptions();
 
-            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FirstChoiceOptionId);
-            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FourthChoiceOptionId);
-            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
-            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
+            ViewBag.FirstChoiceOptionId = new SelectList(getSpecificOption((int)choice.FirstChoiceOptionId), "OptionID", "Title", choice.FirstChoiceOptionId);
+            ViewBag.FourthChoiceOptionId = new SelectList(getSpecificOption((int)choice.SecondChoiceOptionId), "OptionID", "Title", choice.FourthChoiceOptionId);
+            ViewBag.SecondChoiceOptionId = new SelectList(getSpecificOption((int)choice.ThirdChoiceOptionId), "OptionID", "Title", choice.SecondChoiceOptionId);
+            ViewBag.ThirdChoiceOptionId = new SelectList(getSpecificOption((int)choice.FourthChoiceOptionId), "OptionID", "Title", choice.ThirdChoiceOptionId);
 
-            // Display a custom dropdown with readable YearTerm Values
-            IEnumerable<SelectListItem> termItems = db.YearTerms.Select(c => new SelectListItem()
-            {
-                Value = c.YearTermID.ToString(),
-                Text = (c.Term == 10 ? "Winter " + c.Year :
-                         c.Term == 20 ? "Spring/Summer " + c.Year :
-                         c.Term == 30 ? "Fall " + c.Year : "Error"),
-            });
-            ViewBag.YearTermID = new SelectList(termItems, "Value", "Text", choice.YearTermID.ToString());
+            // Display the YearTerm that the choice is associated with
+            Dictionary<String, Object> yearTermValues = getYearTermInfo();
+            ViewBag.yearTermID = yearTermValues["yearTermID"];
+            ViewBag.yearTermName = yearTermValues["yearTermName"];
 
             return View(choice);
         }
@@ -163,20 +158,16 @@ namespace OptionsWebsite.Controllers
             // Retrieve only the active choices
             var activeOptions = getOptions();
 
-            ViewBag.FirstChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FirstChoiceOptionId);
-            ViewBag.FourthChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.FourthChoiceOptionId);
-            ViewBag.SecondChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.SecondChoiceOptionId);
-            ViewBag.ThirdChoiceOptionId = new SelectList(activeOptions, "OptionID", "Title", choice.ThirdChoiceOptionId);
+            ViewBag.FirstChoiceOptionId = new SelectList(getSpecificOption((int)choice.FirstChoiceOptionId), "OptionID", "Title", choice.FirstChoiceOptionId);
+            ViewBag.FourthChoiceOptionId = new SelectList(getSpecificOption((int)choice.SecondChoiceOptionId), "OptionID", "Title", choice.FourthChoiceOptionId);
+            ViewBag.SecondChoiceOptionId = new SelectList(getSpecificOption((int)choice.ThirdChoiceOptionId), "OptionID", "Title", choice.SecondChoiceOptionId);
+            ViewBag.ThirdChoiceOptionId = new SelectList(getSpecificOption((int)choice.FourthChoiceOptionId), "OptionID", "Title", choice.ThirdChoiceOptionId);
 
-            // Display a custom dropdown with readable YearTerm Values
-            IEnumerable<SelectListItem> termItems = db.YearTerms.Select(c => new SelectListItem()
-            {
-                Value = c.YearTermID.ToString(),
-                Text = (c.Term == 10 ? "Winter " + c.Year :
-                         c.Term == 20 ? "Spring/Summer " + c.Year :
-                         c.Term == 30 ? "Fall " + c.Year : "Error"),
-            });
-            ViewBag.YearTermID = new SelectList(termItems, "Value", "Text", choice.YearTermID.ToString());
+            // Display the YearTerm that the choice is associated with
+            Dictionary<String, Object> yearTermValues = getYearTermInfo();
+            ViewBag.yearTermID = yearTermValues["yearTermID"];
+            ViewBag.yearTermName = yearTermValues["yearTermName"];
+
             return View(choice);
         }
 
@@ -241,6 +232,12 @@ namespace OptionsWebsite.Controllers
         private IQueryable<Option> getOptions()
         {
             return db.Options.Where(c => c.isActive == true);
+        }
+
+        // Returns a DB object of the diploma options that are Active
+        private IQueryable<Option> getSpecificOption(int optionId)
+        {
+            return db.Options.Where(c => c.isActive == true || c.OptionID == optionId);
         }
 
         // Returns a readable string of the passed in YearTerm

@@ -91,7 +91,7 @@ namespace OptionsWebsite.Controllers
                     foreach (var term in terms)
                     {
                         term.isDefault = false;
-                    }
+                    } 
                 } else
                 {
                     var defaultCount = db.YearTerms.Where(yT => yT.isDefault == true).Count();
