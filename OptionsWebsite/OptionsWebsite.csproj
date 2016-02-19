@@ -200,6 +200,7 @@
     <Content Include="App_Data\DiplomaOptions_log.ldf">
       <DependentUpon>DiplomaOptions.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\bcit-logo.svg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
