@@ -141,6 +141,16 @@ namespace OptionsWebsite.Controllers
         {
             YearTerm yearTerm = db.YearTerms.Find(id);
             db.YearTerms.Remove(yearTerm);
+            
+            db.SaveChanges();
+
+            // Make the last yearTerm set to default
+            // If the current default is deleted
+            if (yearTerm.isDefault)
+            {
+                int newYearTerm = db.YearTerms.Max(c => c.YearTermID);
+                db.YearTerms.Find(newYearTerm).isDefault = true;
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
