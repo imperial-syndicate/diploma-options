@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Error</h2>
+
+@(ViewBag.ErrorDetails)
+<br/>
+@Html.ActionLink("Back to List", (string)ViewBag.ReturnUrl)
+

@@ -45,6 +45,14 @@ namespace OptionsWebsite.Controllers
         [Authorize(Roles = "Student,Admin")]
         public ActionResult Create()
         {
+            // There are new YearTerms available, so error out
+            if (db.YearTerms.Count() <= 0)
+            {
+                ViewBag.ErrorDetails = "There are no terms available";
+                ViewBag.ReturnUrl = "Index";
+                return View("Error");
+            }
+
             // Retrieve only the active choices
             var activeOptions = getOptions();
 
