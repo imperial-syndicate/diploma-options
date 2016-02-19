@@ -184,6 +184,10 @@
     <Compile Include="Migrations\DiplomaMigrations\201602160533073_UpdateRequiredModel.Designer.cs">
       <DependentUpon>201602160533073_UpdateRequiredModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DiplomaMigrations\201602190743573_UpdateValidations.cs" />
+    <Compile Include="Migrations\DiplomaMigrations\201602190743573_UpdateValidations.Designer.cs">
+      <DependentUpon>201602190743573_UpdateValidations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DiplomaMigrations\Configuration.cs" />
     <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.cs" />
     <Compile Include="Migrations\IdentityMigrations\201602142256251_Initial Create.Designer.cs">
@@ -196,10 +200,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DiplomaOptions.mdf" />
-    <Content Include="App_Data\DiplomaOptions_log.ldf">
-      <DependentUpon>DiplomaOptions.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bcit-logo.svg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -295,11 +295,16 @@
     <EmbeddedResource Include="Migrations\DiplomaMigrations\201602160533073_UpdateRequiredModel.resx">
       <DependentUpon>201602160533073_UpdateRequiredModel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\DiplomaMigrations\201602190743573_UpdateValidations.resx">
+      <DependentUpon>201602190743573_UpdateValidations.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\IdentityMigrations\201602142256251_Initial Create.resx">
       <DependentUpon>201602142256251_Initial Create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
