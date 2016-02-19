@@ -92,6 +92,13 @@ namespace OptionsWebsite.Controllers
                     {
                         term.isDefault = false;
                     }
+                } else
+                {
+                    var defaultCount = db.YearTerms.Where(yT => yT.isDefault == true).Count();
+                    if (defaultCount <= 1)
+                    {
+                        yearTerm.isDefault = true;
+                    }
                 }
 
                 db.Entry(yearTerm).State = EntityState.Modified;
