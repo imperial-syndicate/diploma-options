@@ -157,7 +157,7 @@ namespace OptionsWebsite.Controllers
 
             // Make the last yearTerm set to default
             // If the current default is deleted
-            if (yearTerm.isDefault)
+            if (yearTerm.isDefault && db.YearTerms.Count() > 0)
             {
                 int newYearTerm = db.YearTerms.Max(c => c.YearTermID);
                 db.YearTerms.Find(newYearTerm).isDefault = true;
