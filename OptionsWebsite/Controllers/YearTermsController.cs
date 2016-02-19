@@ -52,6 +52,15 @@ namespace OptionsWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                // The user wants this term to be default, so make sure the others are set to false
+                if (yearTerm.isDefault)
+                {
+                    var terms = db.YearTerms.Where(yT => yT.isDefault == true);
+                    foreach (var term in terms)
+                    {
+                        term.isDefault = false;
+                    }
+                }
                 db.YearTerms.Add(yearTerm);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -94,8 +103,10 @@ namespace OptionsWebsite.Controllers
                     } 
                 } else
                 {
-                    var defaultCount = db.YearTerms.Where(yT => yT.isDefault == true).Count();
-                    if (defaultCount <= 1)
+                    var defaultCount = db.YearTerms.Where(
+                        yT => yT.isDefault == true 
+                     && yT.YearTermID != yearTerm.YearTermID).Count();
+                    if (defaultCount <= 0)
                     {
                         yearTerm.isDefault = true;
                     }
@@ -130,6 +141,16 @@ namespace OptionsWebsite.Controllers
         {
             YearTerm yearTerm = db.YearTerms.Find(id);
             db.YearTerms.Remove(yearTerm);
+            
+            db.SaveChanges();
+
+            // Make the last yearTerm set to default
+            // If the current default is deleted
+            if (yearTerm.isDefault)
+            {
+                int newYearTerm = db.YearTerms.Max(c => c.YearTermID);
+                db.YearTerms.Find(newYearTerm).isDefault = true;
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
