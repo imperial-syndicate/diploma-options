@@ -227,6 +227,15 @@ namespace OptionsWebsite.Controllers
         // Check to make sure that the user has entered unique choices
         private bool validChoices(Choice choice)
         {
+            // Make sure the values aren't null
+            if (choice.FirstChoiceOptionId == null
+                || choice.SecondChoiceOptionId == null
+                || choice.ThirdChoiceOptionId == null
+                || choice.FourthChoiceOptionId == null)
+            {
+                return false;
+            }
+
             // Check for non-duplicate options
             var list = new List<int>();
             list.Add((int)choice.FirstChoiceOptionId);
