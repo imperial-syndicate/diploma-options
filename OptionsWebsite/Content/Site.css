@@ -63,6 +63,10 @@ textarea {
             background: #2553a1;
             color: #FFFFFF;
         }
+        #upper-header .navbar-text {
+            margin-top: 7px;
+            margin-bottom: 0;
+        }
 /* Mobile Only Header Styling */
 @media (max-width: 767px) {
     #upper-header .nav {
@@ -74,6 +78,9 @@ textarea {
     #upper-header .nav>li {
         display: inline;
         float: left;
+    }
+    #upper-header .navbar-text {
+        margin-right: 20px;
     }
 }
 

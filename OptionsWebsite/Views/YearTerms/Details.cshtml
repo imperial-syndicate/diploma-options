@@ -1,53 +1,48 @@
 ﻿@model DiplomaDataModel.YearTerm
-
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>YearTerm</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Term)
-        </dt>
-
-        <dd>
-            @switch (Model.Term)
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Details</h2>
+        <div>
+            <h4>YearTerm</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Year)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Year)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Term)
+                </dt>
+                <dd>
+                    @switch (Model.Term)
             {
                 case 10:
-                    @("Winter");
+                            @("Winter");
                     break;
                 case 20:
-                    @("Spring/Summer");
+                            @("Spring/Summer");
                     break;
                 case 30:
-                    @("Fall");
+                            @("Fall");
                     break;
             }
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isDefault)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isDefault)
-        </dd>
-
-    </dl>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.isDefault)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.isDefault)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.YearTermID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.YearTermID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
