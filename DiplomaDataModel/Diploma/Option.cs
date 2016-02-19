@@ -16,6 +16,7 @@ namespace DiplomaDataModel
         // Max length: 50 characters
         [Display(Name = "Option")]
         [StringLength(50)]
+        [Required]
         public string Title { get; set; }
 
         [Display(Name = "Currently Active")]
