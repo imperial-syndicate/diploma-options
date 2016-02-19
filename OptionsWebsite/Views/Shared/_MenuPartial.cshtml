@@ -1,6 +1,6 @@
 ﻿@if (User.IsInRole("Admin"))
 {
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Home", "Index", "Home")</li>
         <li>@Html.ActionLink("Options", "Index", "Options")</li>
         <li>@Html.ActionLink("Choices", "Index", "Choices")</li>
@@ -9,8 +9,12 @@
 }
 else if (User.IsInRole("Student"))
 {
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Home", "Index", "Home")</li>
         <li>@Html.ActionLink("Submit Choice", "Create", "Choices")</li>
     </ul>
+}
+else
+{
+    <p class="navbar-text navbar-nav navbar-right">British Columbia Institute Of Technology</p>
 }
