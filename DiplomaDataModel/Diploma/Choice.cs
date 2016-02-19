@@ -27,6 +27,7 @@ namespace DiplomaDataModel
         [StringLength(9)]
         [Required]
         [Editable(false)]
+        [RegularExpression("^A00[0-9]{6}$", ErrorMessage = "Must start with A00 followed by 6 digits")]
         public string StudentID { get; set; }
 
         // Max Length 40 Characters
