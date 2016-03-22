@@ -49,9 +49,8 @@ namespace OptionsWebsite.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -79,6 +78,11 @@ namespace OptionsWebsite.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [RegularExpression("^[aA]00[0-9]{6}$", ErrorMessage = "Must start with A00 followed by 6 digits")]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
     }
 
     public class ResetPasswordViewModel

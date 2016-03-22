@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DiplomaDataModel.Choice>
+
+@{
+    ViewBag.Title = "All Choices";
+}
+
+<h2>All Choices</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.YearTerm.YearTermID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentLastName)
+        </th>
+        <th>
+            First Choice
+        </th>
+        <th>
+            Second Choice
+        </th>
+        <th>
+            Third Choice
+        </th>
+        <th>
+            Fourth Choice
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectionDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @switch (item.YearTerm.Term)
+            {
+                case 10:
+                    @("Winter");
+                        break;
+                case 20:
+                    @("Spring/Summer");
+                        break;
+                case 30:
+                    @("Fall");
+                    break;
+            }
+            @(item.YearTerm.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstOption.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondOption.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThirdOption.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FourthOption.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectionDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ChoiceID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ChoiceID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ChoiceID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -5,6 +5,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    margin-top: 80px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -21,4 +22,132 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/**===================================/
+ *  All Header Styling :)
+ *===================================*/
+.navbar-inverse {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#upper-header {
+    background: #323232;
+    height: 30px;
+}
+    #upper-header .upper {
+        background: #2d2d2d;
+    }
+    #upper-header.navbar {
+        min-height: 30px;
+    }
+    #upper-header .nav {
+        font-size: 12px;
+    }
+        #upper-header .nav>li {
+            padding: 0;
+        }
+        #upper-header .nav>li>a {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        #upper-header .nav>li>a:hover {
+            color: #999999;
+            text-decoration:underline;
+        }
+        #upper-header .nav>li>a.blue-button {
+            background: #2553a1;
+            color: #FFFFFF;
+        }
+        #upper-header .navbar-text {
+            margin-top: 7px;
+            margin-bottom: 0;
+        }
+/* Mobile Only Header Styling */
+@media (max-width: 767px) {
+    #upper-header .nav {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    #upper-header .nav>li {
+        display: inline;
+        float: left;
+    }
+    #upper-header .navbar-text {
+        margin-right: 20px;
+    }
+}
+
+#lower-header {
+    background: #3f3f3f;
+    height: 75px;
+}
+    #lower-header .lower {
+        background: #444444;
+        height: 75px;
+    }
+    #lower-header.navbar {
+        min-height: 75px;
+    }
+    #lower-header .bcit-logo {
+        background-image: url('bcit-logo.svg');
+        background-repeat: no-repeat;
+        display: inline-block;
+        position: relative;
+        width: 95px;
+        height: 85px;
+        left: 25px;
+        top: 10px;
+        z-index: 1000;
+    }
+    #lower-header.navbar-inverse .navbar-nav {
+        position: relative;
+        top: 25px;
+    }
+        #lower-header.navbar-inverse .navbar-nav > li > a {
+            color: #FFFFFF;
+            padding: 15px 20px;
+        }
+        #lower-header.navbar-inverse .navbar-nav > li > a:hover {
+            background: #a0a0a0;
+        }
+    #lower-header.navbar-inverse .navbar-toggle {
+        margin-top: 25px;
+    }
+
+/* Mobile Only Header Styling */
+@media (max-width: 767px) {
+    #lower-header {
+        height: 85px;
+    }
+        #lower-header .lower {
+            height: 85px;
+        }
+        #lower-header.navbar {
+            min-height: 85px;
+        }
+    #lower-header.navbar-inverse .navbar-nav {
+        position: relative;
+        top: 0;
+    }
+    #lower-header .navbar-collapse {
+        background: #f2f2f2;
+    }
+        #lower-header .navbar-collapse ul {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        #lower-header.navbar-inverse .navbar-nav > li > a {
+            color: #167bdf;
+            border-bottom: 1px solid #D9D9D9;
+        }
+        #lower-header.navbar-inverse .navbar-nav > li > a:hover {
+            background: transparent;
+        }
 }
