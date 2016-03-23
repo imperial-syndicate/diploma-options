@@ -1,0 +1,52 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityUser
+@{
+    ViewBag.Title = "Details";
+}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Details</h2>
+        <div>
+            <h4>User</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    Enabled
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LockoutEnabled)
+                </dd>
+                <dt>
+                    Roles
+                </dt>
+                <dd>
+                    @foreach (Microsoft.AspNet.Identity.EntityFramework.IdentityRole role in ViewBag.roles)
+                    {
+                        @(role.Name)<br/>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+</div>
