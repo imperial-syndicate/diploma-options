@@ -85,13 +85,24 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
         {
-            if (ModelState.IsValid)
+            if (role.Name == "" || string.IsNullOrWhiteSpace(role.Name))
+            {
+                ModelState.AddModelError("", "Invalid Role Name");
+                return View(role);
+            }
+
+            try
             {
                 db.Entry(role).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(role);
+            catch
+            {
+                ModelState.AddModelError("", "Role with name already exists");
+                return View(role);
+            }
+            
         }
 
         // GET: Roles/Delete/5
