@@ -62,7 +62,7 @@ namespace OptionsWebAPI.Controllers
 
                     choiceNum.Add("Choice" + (k + 1), c1);
                 }
-                allChoices.Add(years[b] + "" + terms[b], choiceNum);
+                allChoices.Add(yearterm_num.ToString(), choiceNum);
             }
             allChoices.Add("Options", ja_options);
 

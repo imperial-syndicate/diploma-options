@@ -26,18 +26,19 @@
 
     $('#TypeReportSelects').change(function (data) {
         var c = $('#TypeReportSelects').find(":selected").val();
+        var yearterm = $('#YearTermSelects').find(":selected").val();
         console.log('Grabbing data');
-        getReports();
+        getReports(yearterm);
     });
 
     var potato;
     var students = [];
     var student_count = 0;
 
-    var getReports = function () {
+    var getReports = function (yearterm) {
         $.support.cors = true;
         $.ajax({
-            url: "http://localhost:12853/api/choices/3",
+            url: "http://localhost:12853/api/choices/" + yearterm,
             type: "GET",
             success: function (data) {
                 students = data;
@@ -80,10 +81,10 @@
             type: "GET",
             success: function (data) {
                 potato = data;
-                getChoice(1, "201530");
-                getChoice(2, "201530");
-                getChoice(3, "201530");
-                getChoice(4, "201530");
+                getChoice(1, "2");
+                getChoice(2, "2");
+                getChoice(3, "2");
+                getChoice(4, "2");
 
             }
         });
