@@ -1,4 +1,5 @@
 ﻿using DiplomaDataModel.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -28,7 +29,7 @@ namespace OptionsWebsite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Microsoft.AspNet.Identity.EntityFramework.IdentityRole role = db.Roles.Find(id);
+            IdentityRole role = db.Roles.Find(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -45,7 +46,7 @@ namespace OptionsWebsite.Controllers
         // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
+        public ActionResult Create(IdentityRole role)
         {
             if (role.Name == "" || string.IsNullOrWhiteSpace(role.Name))
             {
@@ -73,7 +74,7 @@ namespace OptionsWebsite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Microsoft.AspNet.Identity.EntityFramework.IdentityRole role = db.Roles.Find(id);
+            IdentityRole role = db.Roles.Find(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -84,11 +85,18 @@ namespace OptionsWebsite.Controllers
         // POST: Roles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
+        public ActionResult Edit(IdentityRole role)
         {
             if (role.Name == "" || string.IsNullOrWhiteSpace(role.Name))
             {
                 ModelState.AddModelError("", "Invalid Role Name");
+                return View(role);
+            }
+
+            IdentityRole oldRole = db.Roles.Find(role.Id);
+            if (oldRole.Name == "Admin")
+            {
+                ModelState.AddModelError("", "Cannot rename the role 'Admin'. This is a protected role to make sure the website doesn't become inaccessible.");
                 return View(role);
             }
 
@@ -113,7 +121,7 @@ namespace OptionsWebsite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Microsoft.AspNet.Identity.EntityFramework.IdentityRole role = db.Roles.Find(id);
+            IdentityRole role = db.Roles.Find(id);
             if (role == null)
             {
                 return HttpNotFound();
@@ -126,11 +134,18 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Microsoft.AspNet.Identity.EntityFramework.IdentityRole role = db.Roles.Find(id);
-            db.Roles.Remove(role);
+            IdentityRole role = db.Roles.Find(id);
 
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (role.Name == "Admin")
+            {
+                ModelState.AddModelError("", "Cannot delete the role 'Admin'. This is a protected role to make sure the website doesn't become inaccessible.");
+                return View(role);
+            }
+            else {
+                db.Roles.Remove(role);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
     }
 }
