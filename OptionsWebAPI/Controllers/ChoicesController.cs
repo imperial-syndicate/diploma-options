@@ -18,11 +18,12 @@ namespace OptionsWebAPI.Controllers
         
         public JObject GetGraphData()
         {
-            JObject optionsForAChoice = new JObject();
             JObject allChoices = new JObject();
             JObject choiceNum = new JObject();
             int[] arr_choice;
             var options = db.Options.Select(o => o.OptionID).ToArray();
+            int[] arr_choices;
+
 
             //Choices for YearTermID 2 - 201530
             int?[] choice1 = db.Choices.Where(c => c.YearTermID == 2).Select(c => c.FirstChoiceOptionId).ToArray();
@@ -30,20 +31,23 @@ namespace OptionsWebAPI.Controllers
             int?[] choice3 = db.Choices.Where(c => c.YearTermID == 2).Select(c => c.ThirdChoiceOptionId).ToArray();
             int?[] choice4 = db.Choices.Where(c => c.YearTermID == 2).Select(c => c.FourthChoiceOptionId).ToArray();
 
+            JArray c1 = new JArray();
             //An array that contains arrays of choices
             int?[][] choices = new int?[][] { choice1, choice2, choice3, choice4 };
 
             //Iterate through each choices: 1-4
             for (int k = 0; k < choices.Length; k++)
             {
-                optionsForAChoice = new JObject();
+                c1 = new JArray();
+                arr_choices = new int[options.Length];
                 arr_choice = new int[options.Length + 1];   //Array holder for current iteration of all choices
                 for (int j = 0; j < choices[k].Length; j++) //Iterate through individual arrays of choices, 1st 2nd 3rd 4th choices
                     arr_choice[   (int)choices[k][j]     ]++;  //Increment any repeating choices
-                for (int i = 1; i <= options.Length; i++)
-                    optionsForAChoice.Add("C" + (k+1) +"_" + i.ToString(), arr_choice[i]);  //Add tags to identify each choice
+                
+                Array.Copy(arr_choice,1, arr_choices, 0, options.Length);
+                c1.Add(arr_choices);
 
-                choiceNum.Add("Choice" + (k+1), optionsForAChoice);
+                choiceNum.Add("Choice" + (k+1), c1);
             }
             allChoices.Add("201530", choiceNum);
 
