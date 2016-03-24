@@ -30,7 +30,7 @@ namespace OptionsWebsite.Controllers
                     yearterm = "Spring/Summer";
                 else
                     yearterm = "Fall";
-                yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.Term.ToString() });
+                yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.Year.ToString() + "" + term.Term.ToString() });
             }
             ViewBag.YearTermSelects = yearterms_selects;
 
