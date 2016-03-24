@@ -76,7 +76,10 @@ namespace OptionsWebAPI.Controllers
             JArray ja_options = new JArray();
             string[] student_prop = new string[9];
             var allStudents = db.Choices.Where(o => o.YearTermID == id).ToArray();
+            var option_names = db.Options.Select(o => o.Title).ToArray();
             int i = 0;
+            
+
             foreach(var student in allStudents)
             {
                 ja_options = new JArray();
@@ -84,10 +87,10 @@ namespace OptionsWebAPI.Controllers
                 student_prop[1] = student.StudentID;
                 student_prop[2] = student.StudentFirstName;
                 student_prop[3] = student.StudentLastName;
-                student_prop[4] = student.FirstChoiceOptionId.ToString();
-                student_prop[5] = student.SecondChoiceOptionId.ToString();
-                student_prop[6] = student.ThirdChoiceOptionId.ToString();
-                student_prop[7] = student.FourthChoiceOptionId.ToString();
+                student_prop[4] = db.Options.Where(o => o.OptionID == student.FirstChoiceOptionId).Select(o => o.Title).First();
+                student_prop[5] = db.Options.Where(o => o.OptionID == student.SecondChoiceOptionId).Select(o => o.Title).First();
+                student_prop[6] = db.Options.Where(o => o.OptionID == student.ThirdChoiceOptionId).Select(o => o.Title).First();
+                student_prop[7] = db.Options.Where(o => o.OptionID == student.FourthChoiceOptionId).Select(o => o.Title).First();
                 student_prop[8] = student.SelectionDate.ToString();
 
                 ja_options.Add(student_prop);
