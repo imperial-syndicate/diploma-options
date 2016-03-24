@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace OptionsWebsite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -74,6 +75,7 @@ namespace OptionsWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(IdentityUser user, FormCollection collection)
         {
+            bool isValid = true;
             try
             {
                 IdentityUser oldUser = db.Users.Find(user.Id);
@@ -94,7 +96,14 @@ namespace OptionsWebsite.Controllers
                     string[] collect = collection["userRoles[]"].Split(',');
                     foreach (var role in collect)
                     {
-                        userManager.RemoveFromRole(oldUser.Id, role);
+                        if (oldUser.UserName == "A00111111" && role == "Admin")
+                        {
+                            ModelState.AddModelError("", "Cannot remove Admin role from this user");
+                            isValid = false;
+                        }
+                        else {
+                            userManager.RemoveFromRole(oldUser.Id, role);
+                        }
                     }
                 }
 
@@ -111,7 +120,10 @@ namespace OptionsWebsite.Controllers
                 List<String> userRoles = oldUser.Roles.Select(s => s.RoleId).ToList();
                 ViewBag.rolesList = getAllRoles(userRoles);
 
-                ViewBag.successMessage = "User has been successfully updated";
+                if (isValid)
+                {
+                    ViewBag.successMessage = "User has been successfully updated";
+                }
                 return View(oldUser);
             }
             catch
