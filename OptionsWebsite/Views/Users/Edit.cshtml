@@ -4,6 +4,13 @@
 }
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
+        @if(ViewBag.successMessage != null)
+        {
+        <p class="alert alert-success">
+            @(ViewBag.successMessage)
+        </p>
+        }
+
         <h2>Edit</h2>
         @using (Html.BeginForm())
         {
@@ -27,7 +34,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="LockoutEnabled" class="control-label col-md-4">Enabled</label>
+                    <label for="LockoutEnabled" class="control-label col-md-4">Locked</label>
                     <div class="col-md-8">
                         <div class="checkbox">
                         @Html.EditorFor(model => model.LockoutEnabled)
@@ -35,9 +42,41 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <br/><br/>
+            <div class="form-horizontal">
+                <h4>Roles</h4>
+                <hr />
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Delete?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Microsoft.AspNet.Identity.EntityFramework.IdentityRole role in ViewBag.roles)
+                        {
+                            <tr>
+                                <td>@(role.Name)</td>
+                                <td><input type='checkbox' name='userRoles[]' value='@(role.Name)' /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Add Role</label>
+                    <div class="col-md-8">
+                        @if (ViewBag.rolesList != null)
+                        {
+                            @Html.DropDownList("Roles", (List<SelectListItem>)ViewBag.rolesList, htmlAttributes: new { @class = "form-control" })
+                        }
+                    </div>
+                </div>
+                <br/><hr/>
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Save All" class="btn btn-default" />
                     </div>
                 </div>
             </div>
