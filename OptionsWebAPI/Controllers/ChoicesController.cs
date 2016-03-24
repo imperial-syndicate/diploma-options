@@ -24,6 +24,11 @@ namespace OptionsWebAPI.Controllers
             var options = db.Options.Select(o => o.OptionID).ToArray();
             int[] arr_choices;
 
+            var option_names = db.Options.Select(o => o.Title).ToArray();
+            JArray ja_options = new JArray();
+            ja_options.Add(option_names);
+
+            
 
             //Choices for YearTermID 2 - 201530
             int?[] choice1 = db.Choices.Where(c => c.YearTermID == 2).Select(c => c.FirstChoiceOptionId).ToArray();
@@ -50,6 +55,7 @@ namespace OptionsWebAPI.Controllers
                 choiceNum.Add("Choice" + (k+1), c1);
             }
             allChoices.Add("201530", choiceNum);
+            allChoices.Add("Options", ja_options);
 
             return allChoices;
         }
