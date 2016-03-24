@@ -64,15 +64,37 @@ namespace OptionsWebAPI.Controllers
                 }
                 allChoices.Add(years[b] + "" + terms[b], choiceNum);
             }
-
             allChoices.Add("Options", ja_options);
 
             return allChoices;
         }
-        static IEnumerable<string> Split(string str, int chunkSize)
+
+        // GET api/values/5
+        public JObject Get(int id)
         {
-            return Enumerable.Range(0, str.Length / chunkSize)
-                .Select(i => str.Substring(i * chunkSize, chunkSize));
+            JObject students = new JObject();
+            JArray ja_options = new JArray();
+            string[] student_prop = new string[9];
+            var allStudents = db.Choices.Where(o => o.YearTermID == id).ToArray();
+            int i = 0;
+            foreach(var student in allStudents)
+            {
+                ja_options = new JArray();
+                student_prop[0] = student.YearTermID.ToString();
+                student_prop[1] = student.StudentID;
+                student_prop[2] = student.StudentFirstName;
+                student_prop[3] = student.StudentLastName;
+                student_prop[4] = student.FirstChoiceOptionId.ToString();
+                student_prop[5] = student.SecondChoiceOptionId.ToString();
+                student_prop[6] = student.ThirdChoiceOptionId.ToString();
+                student_prop[7] = student.FourthChoiceOptionId.ToString();
+                student_prop[8] = student.SelectionDate.ToString();
+
+                ja_options.Add(student_prop);
+                students.Add("student" + i++ , ja_options);
+            }       
+            return students;
         }
+
     }
 }
