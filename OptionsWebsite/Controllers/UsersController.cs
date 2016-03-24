@@ -81,8 +81,15 @@ namespace OptionsWebsite.Controllers
                 IdentityUser oldUser = db.Users.Find(user.Id);
 
                 // Update the users locked status
-                oldUser.LockoutEnabled = user.LockoutEnabled;
-                db.SaveChanges();
+                if (oldUser.UserName == "A00111111" && user.LockoutEnabled == true)
+                {
+                    ModelState.AddModelError("", "Cannot lock the user 'A00111111'.");
+                    isValid = false;
+                }
+                else {
+                    oldUser.LockoutEnabled = user.LockoutEnabled;
+                    db.SaveChanges();
+                }
 
                 // Role Management
                 var roleStore = new RoleStore<IdentityRole>(db);
