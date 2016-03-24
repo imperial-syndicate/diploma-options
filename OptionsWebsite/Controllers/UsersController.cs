@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace OptionsWebsite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
