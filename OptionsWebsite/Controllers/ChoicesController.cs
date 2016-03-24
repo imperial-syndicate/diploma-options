@@ -20,6 +20,27 @@ namespace OptionsWebsite.Controllers
         public ActionResult Index()
         {
             var choices = db.Choices.Include(c => c.FirstOption).Include(c => c.FourthOption).Include(c => c.SecondOption).Include(c => c.ThirdOption).Include(c => c.YearTerm);
+            var yearterms = db.YearTerms.ToArray();
+            List<SelectListItem> yearterms_selects = new List<SelectListItem>();
+            String yearterm;
+            foreach (YearTerm term in yearterms){
+                if (term.Term == 10)
+                    yearterm = "Winter";
+                else if (term.Term == 20)
+                    yearterm = "Spring/Summer";
+                else
+                    yearterm = "Fall";
+                yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.YearTermID.ToString() });
+            }
+            ViewBag.YearTermSelects = yearterms_selects;
+
+            // TypeReports
+            List<SelectListItem> typereports = new List<SelectListItem>()
+            {
+                new SelectListItem {Text = "Details Report", Value = "details" },
+                new SelectListItem {Text = "Chart", Value = "chart" }
+            };
+            ViewBag.TypeReportSelects = typereports;
 
             return View(choices.ToList());
         }
