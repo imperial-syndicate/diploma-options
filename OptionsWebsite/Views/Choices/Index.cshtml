@@ -6,6 +6,91 @@
 
 <h2>All Choices</h2>
 
+
+
+<script>
+    var potato;
+    $(function () {
+        $.support.cors = true;
+        $.ajax({
+            url: "http://localhost:12853/api/choices",
+            type: "GET",
+            success: function (data) { potato = data; somenamedfunction(); }
+        });
+
+
+        var somenamedfunction = function () {
+            console.log(potato);
+            $.each(potato, function (key, value) {
+                console.log(key + ": " + value);
+                $.each(potato[key], function (key2, value2) {
+                    console.log(key2 + ": " + value2);
+                })
+            });
+            $('#graph-data').highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Browser market shares January, 2015 to May, 2015'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Options',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Data Communications',
+                        y: potato["201530"]["Choice1"]["C1_1"]
+                    }, {
+                        name: 'Client Server',
+                        y: potato["201530"]["Choice1"]["C1_2"],
+                        sliced: true,
+                        selected: true
+                    }, {
+                        name: 'Digital Processing',
+                        y: potato["201530"]["Choice1"]["C1_3"]
+                    }, {
+                        name: 'Information Systems',
+                        y: potato["201530"]["Choice1"]["C1_4"]
+                    }, {
+                        name: 'Database',
+                        y: potato["201530"]["Choice1"]["C1_5"]
+                    }, {
+                        name: 'Web and Mobile',
+                        y: potato["201530"]["Choice1"]["C1_6"]
+                    }, {
+                        name: 'Technical Programming',
+                        y: potato["201530"]["Choice1"]["C1_7"]
+                    }
+                    ]
+                }
+                ]
+            });
+        }
+        });
+
+
+</script>
+
+           <div id="graph-data" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

@@ -6,15 +6,17 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace OptionsWebAPI.Controllers
 {
+    [EnableCors("*" , "*", "*")]
     public class ChoicesController : ApiController
     {
         DiplomasContext db = new DiplomasContext();
-
-        public JObject Get()
+        
+        public JObject GetGraphData()
         {
             JObject optionsForAChoice = new JObject();
             JObject allChoices = new JObject();
