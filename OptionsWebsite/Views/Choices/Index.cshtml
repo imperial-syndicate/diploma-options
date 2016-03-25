@@ -49,6 +49,7 @@
     var students = [];
     var student_count = 0;
     var defaultyear = $('#YearTermSelects').find(":selected").val();
+    var currentyearterm = "";
 
 
     var getReports = function (yearterm) {
@@ -73,12 +74,13 @@
     }
     window.location.href
     function WriteResponse(people, target) {
+        currentyearterm = $('#YearTermSelects').find(":selected").text();
         var allstudents = people;
         var strResult = "<table class='ui-state-highlight table'><tr><th>YearTerm</th><th>StudentID</th><th>First Name</th><th>Last Name</th><th>First Choice</th><th>Second Choice</th><th>Third Choice</th><th>Fourth Choice</th><th>Selection Date</th><th></th></tr>";
         for (j = 0; j < student_count; j++) {
             console.log(students['student' + j]);
             strResult += "<tr>\n";
-            strResult += "<td>" + students['student' + j][0] + "</td><td>" + students['student' + j][1] + "</td><td>"
+            strResult += "<td>" + currentyearterm + "</td><td>" + students['student' + j][1] + "</td><td>"
                                 + students['student' + j][2] + "</td><td>" + students['student' + j][3] + "</td>";
             strResult += "<td>" + students['student' + j][4] + "</td><td>" + students['student' + j][5] + "</td><td>"
                                 + students['student' + j][6] + "</td><td>" + students['student' + j][7] + "</td><td>" + students['student' + j][8] + "</td>\n";
@@ -111,6 +113,8 @@
     });
 
     var getChoice = function (choicenum, yearterm) {
+        currentyearterm = $('#YearTermSelects').find(":selected").text();
+
         var array = [];
         var div_tag = "";
         var title = "";
@@ -159,7 +163,7 @@
                 type: 'pie'
             },
             title: {
-                text: title + ' Breakdown for ' + yearterm
+                text: title + ' Breakdown for ' + currentyearterm
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -187,7 +191,11 @@
     }
 
 
+
 </script>
+                      <p>
+                          @Html.ActionLink("Create New", "Create")
+                      </p>
 <div id="filter-choices"></div>
 
      <div class="container">
@@ -198,9 +206,7 @@
                <div class="col-sm-6 charts hide" id="fourth-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: auto auto"></div>
            </div>                     
     </div>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 
 
 
