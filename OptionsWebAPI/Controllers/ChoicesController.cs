@@ -74,7 +74,7 @@ namespace OptionsWebAPI.Controllers
         {
             JObject students = new JObject();
             JArray ja_options = new JArray();
-            string[] student_prop = new string[9];
+            string[] student_prop = new string[10];
             var allStudents = db.Choices.Where(o => o.YearTermID == id).ToArray();
             var option_names = db.Options.Select(o => o.Title).ToArray();
             int i = 0;
@@ -92,6 +92,7 @@ namespace OptionsWebAPI.Controllers
                 student_prop[6] = db.Options.Where(o => o.OptionID == student.ThirdChoiceOptionId).Select(o => o.Title).First();
                 student_prop[7] = db.Options.Where(o => o.OptionID == student.FourthChoiceOptionId).Select(o => o.Title).First();
                 student_prop[8] = student.SelectionDate.ToString();
+                student_prop[9] = student.ChoiceID.ToString();
 
                 ja_options.Add(student_prop);
                 students.Add("student" + i++ , ja_options);
