@@ -25,8 +25,12 @@ namespace OptionsWebAPI.Controllers
             int[] arr_choices;
 
             var option_names = db.Options.Select(o => o.Title).ToArray();
+            var enabled_option_names = db.Options.Where(o => o.isActive == true).Select(o => o.Title).ToArray();
+            JArray ja_enabled_options = new JArray();
+            ja_enabled_options.Add(enabled_option_names);
             JArray ja_options = new JArray();
             ja_options.Add(option_names);
+
             int?[] choice1;
             int?[] choice2;
             int?[] choice3;
@@ -65,6 +69,7 @@ namespace OptionsWebAPI.Controllers
                 allChoices.Add(yearterm_num.ToString(), choiceNum);
             }
             allChoices.Add("Options", ja_options);
+            allChoices.Add("EnabledOptions", ja_enabled_options);
 
             return allChoices;
         }
