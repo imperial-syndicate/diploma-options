@@ -80,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pages\home.html" />
+    <Content Include="pages\login.html" />
+    <Content Include="pages\submit.html" />
+    <Content Include="pages\thanks.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

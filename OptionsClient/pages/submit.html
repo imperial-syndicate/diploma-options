@@ -1,0 +1,79 @@
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Submit Choice</h2>
+        <form method="post" class="form-horizontal">
+            <div class="form-horizontal">
+                <h4>2016</h4>
+                <hr />
+                <!--@Html.ValidationSummary(true, "", new { @class = "text-danger" })-->
+
+                <!--@* Hidden field to store the YearTermID that SHOULD NOT be set by the user *@
+                @Html.Hidden("YearTermID", (int)ViewBag.yearTermID)
+                @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })-->
+
+                <div class="form-group">
+                    <label for="studentID" class="col-md-4 control-label">Student ID</label>
+                    <div class="col-md-8">
+                        <input type="hidden" name="studentID" value="" />
+                        <label for="studentID" class="form-control-static">A00111111</label>
+                        <!--@Html.ValidationMessageFor(model => model.StudentID, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="studentFirstName" class="col-md-4 control-label">First Name</label>
+                    <div class="col-md-8">
+                        <input type="text" name="studentFirstName" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.StudentFirstName, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="studentLastName" class="col-md-4 control-label">Last Name</label>
+                    <div class="col-md-8">
+                        <input type="text" name="studentLastName" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.StudentLastName, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="firstChoiceOptionId" class="col-md-4 control-label">First Choice</label>
+                    <div class="col-md-8">
+                        <input type="text" name="firstChoiceOptionId" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.FirstChoiceOptionId, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="secondChoiceOptionId" class="col-md-4 control-label">Second Choice</label>
+                    <div class="col-md-8">
+                        <input type="text" name="secondChoiceOptionId" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.SecondChoiceOptionId, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thirdChoiceOptionId" class="col-md-4 control-label">Third Choice</label>
+                    <div class="col-md-8">
+                        <input type="text" name="thirdChoiceOptionId" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.ThirdChoiceOptionId, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fourthChoiceOptionId" class="col-md-4 control-label">Fourth Choice</label>
+                    <div class="col-md-8">
+                        <input type="text" name="fourthChoiceOptionId" class="form-control" />
+                        <!--@Html.ValidationMessageFor(model => model.FourthChoiceOptionId, "", new { @class = "text-danger" })-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+            <!--@if (User.IsInRole("Admin"))
+            {
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+            }-->
+        </form>
+    </div>
+</div>

@@ -1,1 +1,18 @@
-﻿Hello World
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <br />
+        <h1>Diploma Choice Submission</h1>
+
+        <div ng-if="user.role == 'Student'">
+            <p class="lead">Welcome! Please make your selection by visiting the Choices page</p>
+        </div>
+        <div ng-if="user.role != 'Student'">
+            <p class="lead">Welcome! Please login or register to make your submission</p>
+        </div>
+
+        <br />
+        <h3>Purpose of this Site</h3>
+        <p>This website allows students to register and submit their choice of options for the second term of the CST program.</p>
+        <br />
+    </div>
+</div>
