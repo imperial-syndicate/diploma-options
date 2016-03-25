@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "All Choices";
-                      var YearTermSelects = ViewBag.YearTermName;
-                      var TypeReports = ViewBag.TypeReportSelects;
 }
 
 <h2>All Choices</h2>
@@ -18,22 +16,40 @@
 
     $('#YearTermSelects').change(function (data) {
         var c = $('#YearTermSelects').find(":selected").val();
-        getChoice(1, c);
-        getChoice(2, c);
-        getChoice(3, c);
-        getChoice(4, c);
+        var report_type = $('#TypeReportSelects').find(":selected").val();
+        console.log(report_type);
+        if (report_type == "details") {
+            getReports(c);
+        } else if (report_type == "chart") {
+            getChoice(1, c);
+            getChoice(2, c);
+            getChoice(3, c);
+            getChoice(4, c);
+        }
     });
 
     $('#TypeReportSelects').change(function (data) {
-        var c = $('#TypeReportSelects').find(":selected").val();
-        var yearterm = $('#YearTermSelects').find(":selected").val();
-        console.log('Grabbing data');
-        getReports(yearterm);
+        var report_type = $('#TypeReportSelects').find(":selected").val();
+        var details = document.getElementById("filter-choices");
+        var charts = document.getElementsByClassName("charts");
+
+
+        if (report_type == "details") {
+            $(".charts").toggleClass("hide");
+            $("#filter-choices").removeClass("hide");
+        } else if (report_type == "chart") {
+            $(".charts").toggleClass("hide");
+            $("#filter-choices").addClass("hide");
+
+        }
+        
     });
 
     var potato;
     var students = [];
     var student_count = 0;
+    var defaultyear = $('#YearTermSelects').find(":selected").val();
+
 
     var getReports = function (yearterm) {
         $.support.cors = true;
@@ -55,19 +71,23 @@
         
         WriteResponse(students, "#filter-choices")
     }
-
+    window.location.href
     function WriteResponse(people, target) {
         var allstudents = people;
-        var strResult = "<table class='ui-state-highlight'><tr><th>YearTerm</th><th>StudentID</th><th>First Name</th><th>Last Name</th><th>First Choice</th><th>Second Choice</th><th>Third Choice</th><th>Fourth Choice</th><th>Selection Date</th></tr>";
+        var strResult = "<table class='ui-state-highlight table'><tr><th>YearTerm</th><th>StudentID</th><th>First Name</th><th>Last Name</th><th>First Choice</th><th>Second Choice</th><th>Third Choice</th><th>Fourth Choice</th><th>Selection Date</th><th></th></tr>";
         for (j = 0; j < student_count; j++) {
             console.log(students['student' + j]);
             strResult += "<tr>\n";
-            strResult += "<td>" + students['student' + j][0] + "</td><td> " + students['student' + j][1] + "</td><td>" + students['student' + j][2] + "</td><td>" + students['student' + j][3] + "</td>";
-            strResult += "<td>" + students['student' + j][4] + "</td><td>" + students['student' + j][5] + "</td><td>" + students['student' + j][6] + "</td><td>" + students['student' + j][7] + "</td><td>" + students['student' + j][8] + "</td>\n";
+            strResult += "<td>" + students['student' + j][0] + "</td><td>" + students['student' + j][1] + "</td><td>"
+                                + students['student' + j][2] + "</td><td>" + students['student' + j][3] + "</td>";
+            strResult += "<td>" + students['student' + j][4] + "</td><td>" + students['student' + j][5] + "</td><td>"
+                                + students['student' + j][6] + "</td><td>" + students['student' + j][7] + "</td><td>" + students['student' + j][8] + "</td>\n";
+
+            strResult += "<td><a href='" + window.location.href + "/Edit/" + students['student' + j][9] + "'>Edit</a></td><td> | </td>";
+            strResult += "<td><a href='" + window.location.href + "/Details/" + students['student' + j][9] + "'>Details</a></td><td> | </td>";
+            strResult += "<td><a href='" + window.location.href + "/Delete/" + students['student' + j][9] + "'>Delete</a></td>";
             strResult += "</tr>\n";
-        }
-            
-        
+        }            
         strResult += "</table>\n";
         $(target).html(strResult);
     }
@@ -81,14 +101,14 @@
             type: "GET",
             success: function (data) {
                 potato = data;
-                getChoice(1, "2");
-                getChoice(2, "2");
-                getChoice(3, "2");
-                getChoice(4, "2");
-
+                getChoice(1, defaultyear);
+                getChoice(2, defaultyear);
+                getChoice(3, defaultyear);
+                getChoice(4, defaultyear);
+                getReports(defaultyear);
             }
         });
-        });
+    });
 
     var getChoice = function (choicenum, yearterm) {
         var array = [];
@@ -168,12 +188,14 @@
 
 
 </script>
+<div id="filter-choices"></div>
+
      <div class="container">
            <div class="row">
-               <div class="col-sm-6" id="first-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-               <div class="col-sm-6" id="second-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-               <div class="col-sm-6" id="third-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-               <div class="col-sm-6" id="fourth-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: 0 auto"></divclass="col-sm-6">
+               <div class="col-sm-6 charts hide" id="first-choice"  style="min-width: 300px; height: 400px; max-width: 600px; margin: auto auto"></div>
+               <div class="col-sm-6 charts hide" id="second-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: auto auto"></div>
+               <div class="col-sm-6 charts hide" id="third-choice"  style="min-width: 300px; height: 400px; max-width: 600px; margin: auto auto"></div>
+               <div class="col-sm-6 charts hide" id="fourth-choice" style="min-width: 300px; height: 400px; max-width: 600px; margin: auto auto"></div>
            </div>                     
     </div>
 <p>
@@ -181,10 +203,8 @@
 </p>
 
 
-<div id="filter-choices">
 
 
-</div>
 
 <!--<table class="table">
     <tr>

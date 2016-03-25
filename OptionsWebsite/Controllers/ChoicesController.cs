@@ -21,6 +21,7 @@ namespace OptionsWebsite.Controllers
         {
             var choices = db.Choices.Include(c => c.FirstOption).Include(c => c.FourthOption).Include(c => c.SecondOption).Include(c => c.ThirdOption).Include(c => c.YearTerm);
             var yearterms = db.YearTerms.ToArray();
+            var defaultyearterm = db.YearTerms.Where(y => y.isDefault == true).First();
             List<SelectListItem> yearterms_selects = new List<SelectListItem>();
             String yearterm;
             foreach (YearTerm term in yearterms){
@@ -30,7 +31,16 @@ namespace OptionsWebsite.Controllers
                     yearterm = "Spring/Summer";
                 else
                     yearterm = "Fall";
-                yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.YearTermID.ToString() });
+
+                if (!term.isDefault)
+                {
+                    yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.YearTermID.ToString(), Selected = false });
+                }
+                else
+                {
+                    yearterms_selects.Add(new SelectListItem { Text = yearterm + " " + term.Year.ToString(), Value = term.YearTermID.ToString(), Selected = true });
+                }
+                
             }
             ViewBag.YearTermSelects = yearterms_selects;
 
