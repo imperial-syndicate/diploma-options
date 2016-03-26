@@ -15,19 +15,13 @@
 
         var _submitChoice = function (userData) {
             var data = "YearTermID=" + userData.yearTermId
-                + "&StudentID=" + userData.studentID
-                + "&StudentFirstName="
-                + userData.firstName
-                + "&StudentLastName="
-                + userData.lastName
-                + "&FirstChoiceOptionId="
-                + userData.firstChoiceOptionId
-                + "&SecondChoiceOptionId="
-                + userData.secondChoiceOptionId
-                + "&ThirdChoiceOptionId="
-                + userData.thirdChoiceOptionId
-                + "&FourthChoiceOptionId="
-                + userData.fourthChoiceOptionId;
+                + "&StudentID=" + userData.StudentID
+                + "&StudentFirstName=" + userData.firstName
+                + "&StudentLastName=" + userData.lastName
+                + "&FirstChoiceOptionId=" + userData.firstChoiceOptionId
+                + "&SecondChoiceOptionId=" + userData.secondChoiceOptionId
+                + "&ThirdChoiceOptionId=" + userData.thirdChoiceOptionId
+                + "&FourthChoiceOptionId=" + userData.fourthChoiceOptionId;
 
             return $http.post(baseUrl + 'api/choices', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
                 .then(function (response) {

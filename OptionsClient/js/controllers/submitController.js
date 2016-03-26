@@ -15,7 +15,7 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
 
     $scope.user = {
         yearTermId: "",
-        studentID: accountService.authentication.username,
+        StudentID: accountService.authentication.username,
         firstName: "",
         lastName: "",
         firstChoiceOptionId: "0",
