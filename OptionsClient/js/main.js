@@ -1,7 +1,7 @@
 ﻿var app = angular.module('choicesApp', ['ngRoute', 'LocalStorageModule']);
 
 // Setup the routing
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $httpProvider) {
 
     $routeProvider
       .when('/home', {
@@ -26,6 +26,8 @@ app.config(function ($routeProvider) {
       });
 
     $routeProvider.otherwise({ redirectTo: "/home" });
+
+    $httpProvider.interceptors.push('authInterceptorService');
 
 });
 

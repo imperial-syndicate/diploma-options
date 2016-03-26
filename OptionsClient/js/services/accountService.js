@@ -17,13 +17,13 @@
             return $http.post(baseUrl + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
                 .then(function (response) {
 
-                localStorageService.set('authorizationData', { token: response.access_token, username: username });
+                    localStorageService.set('authorizationData', { token: "Bearer " + response.data.access_token, username: username });
 
-                _authentication.isAuth = true;
-                _authentication.username = username;
-                _authentication.token = response.access_token;
-                return response.data;
-            });
+                    _authentication.isAuth = true;
+                    _authentication.username = username;
+                    _authentication.token = response.access_token;
+                    return response.data;
+                });
         };
 
         var _register = function (userData) {

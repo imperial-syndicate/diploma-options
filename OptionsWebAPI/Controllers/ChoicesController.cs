@@ -77,6 +77,7 @@ namespace OptionsWebAPI.Controllers
         }
 
         // POST api/choices
+        [System.Web.Http.Authorize]
         [ResponseType(typeof(Choice))]
         public IHttpActionResult PostChoice(Choice choice)
         {
