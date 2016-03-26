@@ -13,9 +13,15 @@
     <header class="navbar navbar-fixed-top" ng-controller="headerController">
         <div id="upper-header" class="navbar navbar-inverse">
             <div class="upper container">
-                <ul class="nav navbar-nav navbar-right pull-right">
+                <ul data-ng-show="!authentication.isAuth" class="nav navbar-nav navbar-right pull-right">
                     <li><a href="#/register" id="registerLink">Register</a></li>
-                    <li><a href="#/login" id="loginLink" class="blue-button">Login</a></li>
+                    <li><a href="#/login" id="loginLink" class="blue-button">Login {{hello}}</a></li>
+                </ul>
+                <ul data-ng-show="authentication.isAuth" class="nav navbar-nav navbar-right pull-right">
+                    <li>
+                        <p class="navbar-text navbar-nav">Hello {{authentication.username}}</p>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="blue-button">Log off</a></li>
                 </ul>
             </div>
         </div>
@@ -30,10 +36,11 @@
                     <a href="#/" class="navbar-brand bcit-logo"></a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul data-ng-show="authentication.isAuth" class="nav navbar-nav navbar-right">
                         <li><a href="#/">Home</a></li>
                         <li><a href="#/submit">Submit Choice</a></li>
                     </ul>
+                    <p data-ng-show="!authentication.isAuth" class="navbar-text navbar-nav navbar-right">British Columbia Institute Of Technology</p>
                 </div>
             </div>
         </div>
@@ -50,10 +57,12 @@
     <!-- angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="js/angular-local-storage.min.js"></script>
     <!-- bootstrap -->
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- personal -->
     <script src="js/main.js"></script>
+    <script src="js/accountService.js"></script>
 </body>
 </html>
