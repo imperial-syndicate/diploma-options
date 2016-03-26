@@ -1,0 +1,45 @@
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Login</h2>
+        <section id="loginForm">
+            <form method="post" class="form-horizontal">
+                <hr />
+                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                    {{message}}
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="username" class="control-label">Username</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="username" ng-model="user.username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label for="password" class="control-label">Password</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" name="password" ng-model="user.password" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <div class="checkbox">
+                            <input type="checkbox" name="rememberMe" ng-model="user.rememberMe" />
+                            <label for="rememberMe">Remember Me</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Log in" class="btn btn-default" ng-click="loginUser()" />
+                    </div>
+                </div>
+                <p>
+                    <a href="#/register">Register as a new user</a>
+                </p>
+            </form>
+        </section>
+    </div>
+</div>
