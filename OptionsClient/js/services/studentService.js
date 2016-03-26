@@ -6,8 +6,9 @@
 
         var baseUrl = 'http://localhost:12853/';
 
-        var _getData = function () {
-            return $http.get(baseUrl + 'api/options')
+        var _getData = function (token) {
+            console.log(token);
+            return $http.get(baseUrl + 'api/options', { headers: { 'Authorization': token, 'Content-Type': 'application/json; charset=utf-8' } })
                 .then(function (response) {
                     return response.data;
                 })

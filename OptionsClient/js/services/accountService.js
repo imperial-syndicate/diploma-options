@@ -6,6 +6,7 @@
 
         var baseUrl = 'http://localhost:12853/';
         var _authentication = {
+            token: "",
             isAuth: false,
             username: ""
         };
@@ -20,6 +21,7 @@
 
                 _authentication.isAuth = true;
                 _authentication.username = username;
+                _authentication.token = response.access_token;
                 return response.data;
             });
         };
@@ -46,6 +48,7 @@
             if (authData) {
                 _authentication.isAuth = true;
                 _authentication.username = authData.username;
+                _authentication.token = authData.token;
             }
         }
 

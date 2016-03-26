@@ -35,9 +35,7 @@
                 <div class="form-group">
                     <label for="firstChoiceOptionId" class="col-md-4 control-label">First Choice</label>
                     <div class="col-md-8">
-                        <input type="text" name="firstChoiceOptionId" class="form-control" ng-model="user.firstChoiceOptionId" />
-                        
-                        <select ng-model="user.firstChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                        <select class="form-control" name="firstChoiceOptionId" ng-model="user.firstChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
                             <option value="">Select Diploma</option>
                         </select>
                     </div>
@@ -45,19 +43,25 @@
                 <div class="form-group">
                     <label for="secondChoiceOptionId" class="col-md-4 control-label">Second Choice</label>
                     <div class="col-md-8">
-                        <input type="text" name="secondChoiceOptionId" class="form-control" ng-model="user.secondChoiceOptionId" />
+                        <select class="form-control" name="secondChoiceOptionId" ng-model="user.secondChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option value="">Select Diploma</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="thirdChoiceOptionId" class="col-md-4 control-label">Third Choice</label>
                     <div class="col-md-8">
-                        <input type="text" name="thirdChoiceOptionId" class="form-control" ng-model="user.thirdChoiceOptionId" />
+                        <select class="form-control" name="thirdChoiceOptionId" ng-model="user.thirdChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option value="">Select Diploma</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="fourthChoiceOptionId" class="col-md-4 control-label">Fourth Choice</label>
                     <div class="col-md-8">
-                        <input type="text" name="fourthChoiceOptionId" class="form-control" ng-model="user.fourthChoiceOptionId" />
+                        <select class="form-control" name="fourthChoiceOptionId" ng-model="user.fourthChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option value="">Select Diploma</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

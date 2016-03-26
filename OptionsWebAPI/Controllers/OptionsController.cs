@@ -22,8 +22,14 @@ namespace OptionsWebAPI.Controllers
             JObject yearTerm = new JObject();
 
             // Get the option names
-            var enabled_option_names = db.Options.Where(o => o.isActive == true).Select(o => o.Title).ToArray();
-            ja_enabled_options.Add(enabled_option_names);
+            var enabled_option_names = db.Options.Where(o => o.isActive == true).ToArray();
+            foreach (var option in enabled_option_names)
+            {
+                JObject optionObj = new JObject();
+                optionObj.Add("Name", option.Title);
+                optionObj.Add("Id", option.OptionID);
+                ja_enabled_options.Add(optionObj);
+            }
 
             // Get the current yearterm
             var yearTerm_query = db.YearTerms.Where(o => o.isDefault == true).First();

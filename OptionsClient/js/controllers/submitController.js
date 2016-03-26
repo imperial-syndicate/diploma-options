@@ -7,7 +7,10 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
     $scope.savedSuccessfully = false;
     $scope.message = "";
 
-    var data = studentService.getData();
+    studentService.getData(accountService.authentication.token).then(function (response) {
+        $scope.diplomaOptions = response.options;
+        console.log(response);
+    });
 
     $scope.user = {
         username: accountService.authentication.username,
@@ -27,6 +30,8 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
     };
 
     var onRegisterError = function (response) {
+        $scope.savedSuccessfully = false;
+        $scope.message = "Uh oh! Your submission was not successful."
         console.log(response);
     };
 
