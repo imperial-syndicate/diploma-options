@@ -8,12 +8,14 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
     $scope.message = "";
 
     studentService.getData(accountService.authentication.token).then(function (response) {
-        $scope.diplomaOptions = response.options;
         console.log(response);
+        $scope.diplomaOptions = response.options;
+        $scope.user.yearTermId = response.yearterm.id;
     });
 
     $scope.user = {
-        username: accountService.authentication.username,
+        yearTermId: "",
+        studentID: accountService.authentication.username,
         firstName: "",
         lastName: "",
         firstChoiceOptionId: "0",
@@ -30,12 +32,21 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
     };
 
     var onRegisterError = function (response) {
+        var errors = [];
+        for (var key in response.data.ModelState) {
+            for (var i = 0; i < response.data.ModelState[key].length; i++) {
+                errors.push(response.data.ModelState[key][i]);
+            }
+        }
         $scope.savedSuccessfully = false;
-        $scope.message = "Uh oh! Your submission was not successful."
+        $scope.message = "Failed to submit choices due to:" + errors.join('\n');
+
         console.log(response);
     };
 
     $scope.submitChoice = function () {
+        console.log($scope.user);
+
         studentService.submitChoice($scope.user)
             .then(onRegisterComplete, onRegisterError);
     }

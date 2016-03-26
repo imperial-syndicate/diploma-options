@@ -1,5 +1,5 @@
 ﻿
-app.controller('registerController', function ($scope, $http, $location, $timeout, accountService) {
+app.controller('registerController', function ($scope, $http, $location, $timeout, accountService, $compile) {
     if (accountService.authentication.isAuth) {
         $location.path('/submit');
     }
@@ -23,6 +23,14 @@ app.controller('registerController', function ($scope, $http, $location, $timeou
     };
 
     var onRegisterError = function (response) {
+        var errors = [];
+        for (var key in response.data.ModelState) {
+            for (var i = 0; i < response.data.ModelState[key].length; i++) {
+                errors.push(response.data.ModelState[key][i]);
+            }
+        }
+        $scope.savedSuccessfully = false;
+        $scope.message = "Failed to register user due to:" + errors.join('\n');
         console.log(response);
     };
 

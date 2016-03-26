@@ -4,7 +4,13 @@ app.controller('loginController', function ($scope, $http, $location, accountSer
         $location.path('/submit');
     }
 
-    $scope.message = 'Login Page';
+    $scope.savedSuccessfully = false;
+    $scope.message = "";
+
+    $scope.user = {
+        username: "",
+        password: ""
+    }
 
     var onAddComplete = function (data) {
         $location.path('/home');
@@ -12,7 +18,10 @@ app.controller('loginController', function ($scope, $http, $location, accountSer
     };
 
     var onAddError = function (response) {
-        alert(response.statusText + ', error code: ' + response.status);
+        $scope.savedSuccessfully = false;
+        $scope.message = "Uh oh! We were unable to log you in.";
+
+        console.log(response.statusText + ', error code: ' + response.status);
     };
 
     $scope.loginUser = function () {
