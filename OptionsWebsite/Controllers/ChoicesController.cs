@@ -16,6 +16,14 @@ namespace OptionsWebsite.Controllers
     {
         private DiplomasContext db = new DiplomasContext();
 
+        [Route("Choices/Error")]
+        public ActionResult Error()
+        {
+            ViewBag.ErrorDetails = "Must be a Student to select options";
+            ViewBag.ReturnUrl = "Index";
+            return View("~/Views/Choices/Error.cshtml");
+        }
+
         // GET: Choices
         public ActionResult Index()
         {
@@ -73,7 +81,7 @@ namespace OptionsWebsite.Controllers
 
         // GET: Choices/Create
         [OverrideAuthorization()]
-        [Authorize(Roles = "Student,Admin")]
+        [AccessDeniedAuthorize(Roles = "Student")]
         public ActionResult Create()
         {
             // There are new YearTerms available, so error out
@@ -117,7 +125,7 @@ namespace OptionsWebsite.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [OverrideAuthorization()]
-        [Authorize(Roles = "Student,Admin")]
+        [AccessDeniedAuthorize(Roles = "Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ChoiceID,YearTermID,StudentID,StudentFirstName,StudentLastName,FirstChoiceOptionId,SecondChoiceOptionId,ThirdChoiceOptionId,FourthChoiceOptionId")] Choice choice)
@@ -359,5 +367,17 @@ namespace OptionsWebsite.Controllers
             return dict;
         }
  
+    }
+    public class AccessDeniedAuthorizeAttribute : AuthorizeAttribute
+    {
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            base.OnAuthorization(filterContext);
+
+            if (filterContext.Result is HttpUnauthorizedResult)
+            {
+                filterContext.Result = new RedirectResult("/Choices/Error");
+            }
+        }
     }
 }
