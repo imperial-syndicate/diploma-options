@@ -1,4 +1,5 @@
-﻿using DiplomaDataModel.Diploma;
+﻿using DiplomaDataModel;
+using DiplomaDataModel.Diploma;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 
 namespace OptionsWebAPI.Controllers
@@ -74,6 +76,48 @@ namespace OptionsWebAPI.Controllers
             return allChoices;
         }
 
+        // POST api/choices
+        [ResponseType(typeof(Choice))]
+        public IHttpActionResult PostChoice(Choice choice)
+        {
+            JObject allMessages = new JObject();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            bool isValid = true;
+            if (choicesHaveZero(choice))
+            {
+                JArray message = new JArray();
+                message.Add("You must fill out all 4 option selections");
+                allMessages.Add("Error", message);
+                isValid = false;
+            }
+            if (!validChoices(choice))
+            {
+                JArray message = new JArray();
+                message.Add("The options you chose must be all different");
+                allMessages.Add("Error", message);
+                isValid = false;
+            }
+
+            choice.SelectionDate = DateTime.Now;
+
+            if (isValid)
+            {
+                db.Choices.Add(choice);
+                db.SaveChanges();
+                return CreatedAtRoute("DefaultApi", new { id = choice.ChoiceID }, choice);
+            } else
+            {
+                JObject modelStateError = new JObject();
+                modelStateError.Add("ModelState", allMessages);
+                return Content(HttpStatusCode.BadRequest, modelStateError);
+            }
+        }
+
         // GET api/values/5
         public JObject Get(int id)
         {
@@ -103,6 +147,50 @@ namespace OptionsWebAPI.Controllers
                 students.Add("student" + i++ , ja_options);
             }       
             return students;
+        }
+
+        private bool choicesHaveZero(Choice choice)
+        {
+            // Make sure the values aren't zero
+            if (choice.FirstChoiceOptionId == 0
+                || choice.SecondChoiceOptionId == 0
+                || choice.ThirdChoiceOptionId == 0
+                || choice.FourthChoiceOptionId == 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        // Check to make sure that the user has entered unique choices
+        private bool validChoices(Choice choice)
+        {
+            // Make sure the values aren't null
+            if (choice.FirstChoiceOptionId == null
+                || choice.SecondChoiceOptionId == null
+                || choice.ThirdChoiceOptionId == null
+                || choice.FourthChoiceOptionId == null)
+            {
+                return false;
+            }
+
+            // Check for non-duplicate options
+            var list = new List<int>();
+            list.Add((int)choice.FirstChoiceOptionId);
+            list.Add((int)choice.SecondChoiceOptionId);
+            list.Add((int)choice.ThirdChoiceOptionId);
+            list.Add((int)choice.FourthChoiceOptionId);
+
+            if (list.Count != list.Distinct().Count())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
     }

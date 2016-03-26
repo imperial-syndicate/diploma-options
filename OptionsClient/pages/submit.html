@@ -1,0 +1,84 @@
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Submit Choice</h2>
+        <form method="post" class="form-horizontal">
+            <div class="form-horizontal">
+                <h4>2016</h4>
+                <hr />
+                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                    {{message}}
+                </div>
+
+                <!--@* Hidden field to store the YearTermID that SHOULD NOT be set by the user *@
+                @Html.Hidden("YearTermID", (int)ViewBag.yearTermID)
+                <
+                @Html.ValidationMessageFor(model => model.YearTermID, "", new { @class = "text-danger" })-->
+                <input type="hidden" name="yearTermId" value="{{user.yearTermId}}" ng-model="user.yearTermId" />
+
+                <div class="form-group">
+                    <label for="studentID" class="col-md-4 control-label">Student ID</label>
+                    <div class="col-md-8">
+                        <input type="hidden" name="username" value="{{user.studentID}}" ng-model="user.studentID" />
+                        <label for="username" class="form-control-static">{{user.studentID}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="studentFirstName" class="col-md-4 control-label">First Name</label>
+                    <div class="col-md-8">
+                        <input type="text" name="studentFirstName" class="form-control" ng-model="user.firstName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="studentLastName" class="col-md-4 control-label">Last Name</label>
+                    <div class="col-md-8">
+                        <input type="text" name="studentLastName" class="form-control" ng-model="user.lastName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="firstChoiceOptionId" class="col-md-4 control-label">First Choice</label>
+                    <div class="col-md-8">
+                        <select class="form-control" name="firstChoiceOptionId" ng-model="user.firstChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option style="display:none" value="">Select Option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="secondChoiceOptionId" class="col-md-4 control-label">Second Choice</label>
+                    <div class="col-md-8">
+                        <select class="form-control" name="secondChoiceOptionId" ng-model="user.secondChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option style="display:none" value="">Select Option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="thirdChoiceOptionId" class="col-md-4 control-label">Third Choice</label>
+                    <div class="col-md-8">
+                        <select class="form-control" name="thirdChoiceOptionId" ng-model="user.thirdChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option style="display:none" value="">Select Option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fourthChoiceOptionId" class="col-md-4 control-label">Fourth Choice</label>
+                    <div class="col-md-8">
+                        <select class="form-control" name="fourthChoiceOptionId" ng-model="user.fourthChoiceOptionId" ng-options="item.Id as item.Name for item in diplomaOptions">
+                            <option style="display:none" value="">Select Option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Create" class="btn btn-default" data-ng-click="submitChoice()" />
+                    </div>
+                </div>
+            </div>
+
+            <!--@if (User.IsInRole("Admin"))
+            {
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+            }-->
+        </form>
+    </div>
+</div>
