@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/Site.css">
 </head>
 <body>
-    <header class="navbar navbar-fixed-top" ng-controller="headerController">
+    <header class="navbar navbar-fixed-top">
         <div id="upper-header" class="navbar navbar-inverse">
             <div class="upper container">
                 <ul data-ng-show="!authentication.isAuth" class="nav navbar-nav navbar-right pull-right">
@@ -21,7 +21,7 @@
                     <li>
                         <p class="navbar-text navbar-nav">Hello {{authentication.username}}</p>
                     </li>
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="blue-button">Log off</a></li>
+                    <li><a ng-click="logout()" href="" class="blue-button">Log off</a></li>
                 </ul>
             </div>
         </div>
@@ -59,10 +59,16 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="js/angular-local-storage.min.js"></script>
     <!-- bootstrap -->
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- personal -->
+    <!-- load main angular app -->
     <script src="js/main.js"></script>
-    <script src="js/accountService.js"></script>
+    <!-- load angular services -->
+    <script src="js/services/accountService.js"></script>
+    <script src="js/services/studentService.js"></script>
+    <!-- load angular controllers -->
+    <script src="js/controllers/homeController.js"></script>
+    <script src="js/controllers/loginController.js"></script>
+    <script src="js/controllers/registerController.js"></script>
+    <script src="js/controllers/submitController.js"></script>
 </body>
 </html>

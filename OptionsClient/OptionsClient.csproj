@@ -69,8 +69,14 @@
     <Content Include="css\Site.css" />
     <Content Include="img\bcit-logo.svg" />
     <Content Include="index.html" />
-    <Content Include="js\accountService.js" />
+    <Content Include="js\controllers\homeController.js" />
+    <Content Include="js\controllers\loginController.js" />
+    <Content Include="js\controllers\registerController.js" />
+    <Content Include="js\controllers\submitController.js" />
+    <Content Include="js\services\accountService.js" />
+    <Content Include="js\angular-local-storage.min.js" />
     <Content Include="js\main.js" />
+    <Content Include="js\services\studentService.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

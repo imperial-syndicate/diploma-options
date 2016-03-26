@@ -18,14 +18,11 @@
         var c = $('#YearTermSelects').find(":selected").val();
         var report_type = $('#TypeReportSelects').find(":selected").val();
         console.log(report_type);
-        if (report_type == "details") {
             getReports(c);
-        } else if (report_type == "chart") {
             getChoice(1, c);
             getChoice(2, c);
             getChoice(3, c);
             getChoice(4, c);
-        }
     });
 
     $('#TypeReportSelects').change(function (data) {

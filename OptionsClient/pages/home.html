@@ -3,10 +3,10 @@
         <br />
         <h1>Diploma Choice Submission</h1>
 
-        <div ng-if="user.role == 'Student'">
+        <div ng-show="authentication.isAuth">
             <p class="lead">Welcome! Please make your selection by visiting the Choices page</p>
         </div>
-        <div ng-if="user.role != 'Student'">
+        <div ng-show="!authentication.isAuth">
             <p class="lead">Welcome! Please login or register to make your submission</p>
         </div>
 

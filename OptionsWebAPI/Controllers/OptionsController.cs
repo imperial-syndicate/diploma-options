@@ -25,9 +25,6 @@ namespace OptionsWebAPI.Controllers
             var enabled_option_names = db.Options.Where(o => o.isActive == true).Select(o => o.Title).ToArray();
             ja_enabled_options.Add(enabled_option_names);
 
-            // Get the users username
-            // TODO: Get the username associated with the authenticated user
-
             // Get the current yearterm
             var yearTerm_query = db.YearTerms.Where(o => o.isDefault == true).First();
             yearTerm.Add("id", yearTerm_query.YearTermID);

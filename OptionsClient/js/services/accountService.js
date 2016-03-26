@@ -24,11 +24,14 @@
             });
         };
 
-        var _register = function (registration) {
-            _logOut();
+        var _register = function (userData) {
+            _logout();
 
-            return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-                return response;
+            var data = "username=" + userData.username + "&email=" + userData.email + "&password=" + userData.password + "&confirmPassword=" + userData.confirmPassword;
+
+            return $http.post(baseUrl + 'api/account/register', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                .then(function (response) {
+                return response.data;
             });
         };
 

@@ -35,6 +35,11 @@ namespace OptionsWebAPI.Models
     public class RegisterBindingModel
     {
         [Required]
+        [RegularExpression("^[aA]00[0-9]{6}$", ErrorMessage = "Must start with A00 followed by 6 digits")]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

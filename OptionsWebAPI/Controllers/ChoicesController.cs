@@ -74,6 +74,11 @@ namespace OptionsWebAPI.Controllers
             return allChoices;
         }
 
+        // POST api/choices
+        public void Post([FromBody]string value)
+        {
+        }
+
         // GET api/values/5
         public JObject Get(int id)
         {

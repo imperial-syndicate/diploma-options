@@ -6,7 +6,7 @@ app.config(function ($routeProvider) {
     $routeProvider
       .when('/home', {
           templateUrl: 'pages/home.html',
-          controller: 'mainController',
+          controller: 'homeController',
           title: 'Home'
       })
       .when('/login', {
@@ -30,7 +30,7 @@ app.config(function ($routeProvider) {
 });
 
 // Controls the rootscope
-app.run(function ($rootScope, $route, accountService) {
+app.run(function ($rootScope, $route, $location, accountService) {
     $rootScope.$on("$routeChangeSuccess", function (currentRoute, previousRoute) {
         //Change page title, based on Route information
         $rootScope.title = $route.current.title;
@@ -38,46 +38,11 @@ app.run(function ($rootScope, $route, accountService) {
         // Set some data based on user authentication
         accountService.fillAuthData();
         $rootScope.authentication = accountService.authentication;
+
+        // Allow users to logout
+        $rootScope.logout = function () {
+            accountService.logout();
+            $location.path('/home');
+        }
     });
-});
-
-// Maintains the header (changes based on user authenticated or not)
-app.controller('headerController', function ($scope, $window, accountService) {
-    
-});
-
-// Controller for the home page
-app.controller('mainController', function ($scope, $http) {
-    $scope.message = 'Everyone come and look!';
-});
-
-// Controller for the login page
-app.controller('loginController', function($scope, $http, $location, accountService) {
-    $scope.message = 'Login Page';
-
-    var onAddComplete = function (data) {
-        $location.path('/home');
-        console.log(data);
-    };
-
-    var onAddError = function (response) {
-        alert(response.statusText + ', error code: ' + response.status);
-    };
-
-    $scope.loginUser = function () {
-        var username = $scope.user.username;
-        var password = $scope.user.password;
-        accountService.login(username, password)
-        .then(onAddComplete, onAddError);
-    }
-});
-
-// Controller for the register page
-app.controller('registerController', function ($scope, $http) {
-    $scope.message = 'Register Page';
-});
-
-// Controller for the submission page
-app.controller('submitController', function ($scope, $http) {
-    $scope.message = 'Submit Choice';
 });

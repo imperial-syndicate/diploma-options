@@ -18,8 +18,6 @@ namespace OptionsWebAPI
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.EnableCors(new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE"));
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 
