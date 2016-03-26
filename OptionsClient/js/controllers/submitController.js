@@ -6,6 +6,7 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
 
     $scope.savedSuccessfully = false;
     $scope.message = "";
+    $scope.submitted = false;
 
     studentService.getData(accountService.authentication.token).then(function (response) {
         console.log(response);
@@ -26,7 +27,7 @@ app.controller('submitController', function ($scope, $http, $location, accountSe
 
     var onRegisterComplete = function (data) {
         $scope.savedSuccessfully = true;
-        $scope.message = "Your choices have been submitted successfully";
+        $scope.submitted = false;
 
         console.log(data);
     };
